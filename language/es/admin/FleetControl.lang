@@ -1,53 +1,53 @@
 <?php
 
-$_Lang['PageTitle']                 = 'Fleets Control';
+$_Lang['PageTitle']                 = 'Control de flotas';
 
-$_Lang['Error_NoFleetsFound']       = 'No fleets movement across the Universe!';
+$_Lang['Error_NoFleetsFound']       = '¡No hay movimientos de flotas en el universo!';
 
 $_Lang['Fleet_ID']                  = 'ID';
-$_Lang['Fleet_Owner']               = 'Owner';
-$_Lang['Fleet_Mission']             = 'Mission';
-$_Lang['Fleet_Array']               = 'Ships';
-$_Lang['Fleet_Cargo']               = 'Cargo';
-$_Lang['Fleet_Start']               = 'Origin place & time';
-$_Lang['Fleet_End']                 = 'Destination place & time';
-$_Lang['Fleet_End_owner']           = 'Destination owner';
-$_Lang['Fleet_Back_time']           = 'Return';
+$_Lang['Fleet_Owner']               = 'Propietario';
+$_Lang['Fleet_Mission']             = 'Misión';
+$_Lang['Fleet_Array']               = 'Naves';
+$_Lang['Fleet_Cargo']               = 'Carga';
+$_Lang['Fleet_Start']               = 'Lugar y hora de origen';
+$_Lang['Fleet_End']                 = 'Lugar y hora de destino';
+$_Lang['Fleet_End_owner']           = 'Propietario destino';
+$_Lang['Fleet_Back_time']           = 'Vuelta';
 
-$_Lang['No_cargo']                  = 'No cargo';
-$_Lang['See_cargo']                 = 'Hover for details';
+$_Lang['No_cargo']                  = 'Sin carga';
+$_Lang['See_cargo']                 = 'Ver detalles';
 
-$_Lang['_ago']                      = 'ago';
-$_Lang['None']                      = 'None';
+$_Lang['_ago']                      = 'atrás';
+$_Lang['None']                      = 'Nada';
 
 $_Lang['Planet_sign']               = 'P';
-$_Lang['Debris_sign']               = 'D';
-$_Lang['Moon_sign']                 = 'M';
-$_Lang['Main_ACS_Fleet']            = 'Main fleet of the union';
-$_Lang['Coming_back']               = 'Coming back';
-$_Lang['TargetAchieved']            = 'Destination reached';
-$_Lang['FleetCameBack']             = 'Mission complete';
-$_Lang['Not_calculated']            = 'Not calculated yet!';
+$_Lang['Debris_sign']               = 'E';
+$_Lang['Moon_sign']                 = 'L';
+$_Lang['Main_ACS_Fleet']            = 'Flota principal del ataque';
+$_Lang['Coming_back']               = 'Volviendo';
+$_Lang['TargetAchieved']            = 'Alcanzado destino';
+$_Lang['FleetCameBack']             = 'Misión completa';
+$_Lang['Not_calculated']            = 'Sin calcular todavía';
 
-$_Lang['Start_from_planet']         = 'Start from a Planet';
-$_Lang['Start_from_moon']           = 'Start from a moon';
-$_Lang['Target_is_planet']          = 'Destination is a Planet';
-$_Lang['Target_is_moon']            = 'Destination is a Moon';
-$_Lang['Target_is_debris']          = 'Destination is a Debris Field';
+$_Lang['Start_from_planet']         = 'Empieza desde un planeta';
+$_Lang['Start_from_moon']           = 'Empieza desde una luna';
+$_Lang['Target_is_planet']          = 'El destino es un planeta';
+$_Lang['Target_is_moon']            = 'El destino es una luna';
+$_Lang['Target_is_debris']          = 'El destino es un campo de escombros';
 
-$_Lang['FleetControl_Refresh']      = 'Refresh';
-$_Lang['FleetControl_Retreat']      = 'Turn back selected fleets';
-$_Lang['FleetControl_Fallback']     = 'Immediately return to origin';
-$_Lang['FleetControl_SendMsg']      = 'Send notifications to players';
+$_Lang['FleetControl_Refresh']      = 'Actualizar';
+$_Lang['FleetControl_Retreat']      = 'Hacer volver';
+$_Lang['FleetControl_Fallback']     = 'Devolver al origen inmediatamente';
+$_Lang['FleetControl_SendMsg']      = 'Enviar notificación a los jugadores';
 
-$_Lang['Ask_AreYouSure']            = 'Are you sure?';
+$_Lang['Ask_AreYouSure']            = '¿Estás seguro?';
 
-$_Lang['SysMsg_AccessDenied']       = 'You do not have enough permissions to perform this action!';
-$_Lang['SysMsg_XFleetsRetreated']   = 'Fleets have been turned back [Turned back: %s / Matched: %s]';
-$_Lang['SysMsg_XFleetsFallenBack']  = 'Fleets have been immediately returned to their origins [Returned: %s / Matched: %s]';
-$_Lang['SysMsg_XACSChanged']        = '(including United Fleets - Updated: %s / Deleted: %s)';
-$_Lang['SysMsg_0FleetsRetreated']   = 'No fleets have been turned back [Matched: %s]';
-$_Lang['SysMsg_0FleetsFallenBack']  = 'No fleets have been returned to their origins [Matched: %s]';
-$_Lang['SysMsg_NoValidFleetsGiven'] = 'No valid fleets given!';
+$_Lang['SysMsg_AccessDenied']       = '¡No dispones de suficientes persmisos para realizar esta acción!';
+$_Lang['SysMsg_XFleetsRetreated']   = 'Las flotas han dado la vuelta [Vueltas: %s / Perdidas: %s]';
+$_Lang['SysMsg_XFleetsFallenBack']  = 'Las flotas han sido devueltas a sus orígenes [Devueltas: %s / Perdidas: %s]';
+$_Lang['SysMsg_XACSChanged']        = '(incluyendo las de ataque conjunto - Actualizadas: %s / Eliminadas: %s)';
+$_Lang['SysMsg_0FleetsRetreated']   = 'Las flotas no han dado la vuelta [Perdidas: %s]';
+$_Lang['SysMsg_0FleetsFallenBack']  = 'Las flotas no han sido devueltas a sus orígenes [Perdidas: %s]';
+$_Lang['SysMsg_NoValidFleetsGiven'] = '¡No hay flotas válidas!';
 
 ?>
