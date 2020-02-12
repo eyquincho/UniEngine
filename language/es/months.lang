@@ -1,47 +1,47 @@
 <?php
 
 $_Lang['month_names'] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Deciembre'
 ];
 
 $_Lang['months_variant0'] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Deciembre'
 ];
 $_Lang['months_variant1'] = [
-    'of January',
-    'of February',
-    'of March',
-    'of April',
-    'of May',
-    'of June',
-    'of July',
-    'of August',
-    'of September',
-    'of October',
-    'of November',
-    'of December'
+    'de Enero',
+    'de Febrero',
+    'de Marzo',
+    'de Abril',
+    'de Mayo',
+    'de Junio',
+    'de Julio',
+    'de Agosto',
+    'de Septiembre',
+    'de Octubre',
+    'de Noviembre',
+    'de Diciembre'
 ];
 
 // FIXME: not the best solution to define functions here, but for now will do
