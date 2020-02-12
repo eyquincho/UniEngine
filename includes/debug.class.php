@@ -11,8 +11,11 @@ class DBErrorHandler {
 
         if ($this->isHandlingError) {
             throw new RuntimeException(
-                "DBErrorHandler: Nesting Prevention!\n" .
-                $this->lastErrorMessage
+                "DBErrorHandler: Nesting Prevention!\n\n" .
+                "Previous error message:\n" .
+                $this->lastErrorMessage . "\n\n" .
+                "Latest error message:\n" .
+                $message
             );
         }
 
@@ -20,13 +23,7 @@ class DBErrorHandler {
 
         define('IN_ERROR', true);
 
-        if (LOCALHOST) {
-            require($_EnginePath . 'config.localhost.php');
-        } else if (TESTSERVER) {
-            require($_EnginePath . 'config.testserver.php');
-        } else {
-            require($_EnginePath . 'config.php');
-        }
+        require($_EnginePath . 'config.php');
 
         if (!$_DBLink) {
             throw new RuntimeException("DBErrorHandler: DBDriver Connection Error #01");
@@ -59,6 +56,8 @@ class DBErrorHandler {
             $Replace_Replace,
             $SQLQuery_InsertError
         );
+
+        $_DBLink->query('UNLOCK TABLES; -- debug.class.php');
 
         $_DBLink->query($SQLQuery_InsertError);
 

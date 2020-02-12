@@ -1,5 +1,7 @@
 <?php
 
+use UniEngine\Engine\Includes\Helpers\Users;
+
 function IPandUA_Logger($TheUser, $Failed = false)
 {
     if(!isset($TheUser['id']) || $TheUser['id'] <= 0)
@@ -12,12 +14,15 @@ function IPandUA_Logger($TheUser, $Failed = false)
     }
 
     global $_SERVER;
-    $IPHash = md5($_SERVER['REMOTE_ADDR']);
+
+    $usersIP = Users\Session\getCurrentIP();
     $UAVal = getDBLink()->escape_string($_SERVER['HTTP_USER_AGENT']);
+
+    $IPHash = md5($usersIP);
     $UAHash = md5($UAVal);
     $InsertIPandUAQuery = '';
     $InsertIPandUAQuery .= "INSERT INTO {{table}} (`Type`, `Value`, `ValueHash`) VALUES ";
-    $InsertIPandUAQuery .= "('ip', '{$_SERVER['REMOTE_ADDR']}', '{$IPHash}'), ";
+    $InsertIPandUAQuery .= "('ip', '{$usersIP}', '{$IPHash}'), ";
     $InsertIPandUAQuery .= "('ua', '{$UAVal}', '{$UAHash}') ";
     $InsertIPandUAQuery .= "ON DUPLICATE KEY UPDATE ";
     $InsertIPandUAQuery .= "`SeenCount` = `SeenCount` + 1;";

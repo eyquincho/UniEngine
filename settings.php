@@ -126,7 +126,7 @@ if(!isOnVacation())
                                     $ChangeSet['password'] = md5($_POST['give_newpass']);
                                     $ChangeSetTypes['password'] = 's';
                                     $InfoMsgs[] = $_Lang['Pass_Changed_plzlogout'];
-                                    setcookie($_GameConfig['COOKIE_NAME'], '', $Now - 3600, '/', '');
+                                    setcookie(getSessionCookieKey(), '', $Now - 3600, '/', '');
                                 }
                                 else
                                 {
@@ -748,8 +748,8 @@ if(!isOnVacation())
                         if($allowVacation === true)
                         {
                             $ChangeSet['is_onvacation'] = '1';
-                            $ChangeSet['vacation_starttime'] = 'UNIX_TIMESTAMP()';
-                            $ChangeSet['vacation_endtime'] = 'UNIX_TIMESTAMP() + '.(MAXVACATIONS_REG * TIME_DAY);
+                            $ChangeSet['vacation_starttime'] = $Now;
+                            $ChangeSet['vacation_endtime'] = $Now + (MAXVACATIONS_REG * TIME_DAY);
                             $ChangeSet['vacation_type']    = '0';
 
                             $ChangeSetCount += 1;
@@ -765,7 +765,7 @@ if(!isOnVacation())
                             if(md5($_POST['delete_confirm']) == $_User['password'])
                             {
                                 $ChangeSet['is_ondeletion'] = '1';
-                                $ChangeSet['deletion_endtime'] = 'UNIX_TIMESTAMP() + '.(ACCOUNT_DELETION_TIME * TIME_DAY);
+                                $ChangeSet['deletion_endtime'] = $Now + (ACCOUNT_DELETION_TIME * TIME_DAY);
                                 $ChangeSetCount += 1;
 
                                 if($ForceGoingOnVacationMsg === true)
@@ -792,6 +792,8 @@ if(!isOnVacation())
 
                 if(empty($_User['settings_FleetColors']))
                 {
+                    $_User['settings_FleetColors'] = [];
+
                     foreach($_Vars_FleetMissions['all'] as $MissionID)
                     {
                         $_User['settings_FleetColors']['ownfly'][$MissionID] = '';
@@ -973,17 +975,17 @@ if(!isOnVacation())
 
             if(!empty($ChangeSet))
             {
+                $UpdateQuery = [];
+
                 foreach($ChangeSet as $Key => $Value)
                 {
                     $_User[$Key] = $Value;
-                    if($Key == 'deletion_endtime' AND $Value != '0')
-                    {
-                        eval('$_User[$Key] = '.(str_replace('UNIX_TIMESTAMP()', $Now, $Value)).';');
-                    }
+
                     if(isset($ChangeSetTypes[$Key]) && $ChangeSetTypes[$Key] == 's')
                     {
                         $Value = "'{$Value}'";
                     }
+
                     $UpdateQuery[] = "`{$Key}` = {$Value}";
                 }
 
@@ -1341,7 +1343,7 @@ if(!isOnVacation())
 
             doquery("UPDATE {{table}} SET `darkEnergy` = `darkEnergy` - 10, `username` = '{$NewNick}', `old_username` = '{$_User['username']}', `old_username_expire` = UNIX_TIMESTAMP() + (7*24*60*60) WHERE `id` = {$_User['id']} LIMIT 1;", 'users');
             doquery("INSERT INTO {{table}} VALUES(NULL, {$_User['id']}, UNIX_TIMESTAMP(), '{$NewNick}', '{$_User['username']}');", 'nick_changelog');
-            setcookie($_GameConfig['COOKIE_NAME'], '', $Now - 3600, '/', '');
+            setcookie(getSessionCookieKey(), '', $Now - 3600, '/', '');
             message($_Lang['NewNick_saved'], $_Lang['NickChange_Title'], 'login.php');
         }
         else
@@ -1388,25 +1390,26 @@ else
         }
     }
 
-    $MinimalVacationTime = ($_User['pro_time'] > $_User['vacation_starttime'] ? MINURLOP_PRO : MINURLOP_FREE) + $_User['vacation_starttime'];
-    if($_User['vacation_type'] != 0)
-    {
-        $_Lang['Parse_Vacation_EndTime'] = $_Lang['Vacation_EndTimeNoBlock'];
-    }
-    else
-    {
-        if($MinimalVacationTime <= $Now)
-        {
-            $MinimalVacationTimeColor = 'lime';
-        }
-        else
-        {
-            $MinimalVacationTimeColor = 'orange';
-        }
-        $_Lang['Parse_Vacation_EndTime'] = sprintf($_Lang['Vacation_EndTime'], $MinimalVacationTimeColor, prettyDate('d m Y, H:i:s', $MinimalVacationTime, 1));
+    includeLang('common_vacationmode');
+
+    if (canTakeVacationOffAnytime()) {
+        $_Lang['Parse_Vacation_EndTime'] = $_Lang['VacationMode_EndTime_Anytime'];
+    } else {
+        $MinimalVacationTime = getUserMinimalVacationTime($_User);
+        $MinimalVacationTimeColor = (
+            $MinimalVacationTime <= $Now ?
+            'lime' :
+            'orange'
+        );
+
+        $_Lang['Parse_Vacation_EndTime'] = sprintf(
+            $_Lang['VacationMode_EndTime_DefinedAs'],
+            $MinimalVacationTimeColor,
+            prettyDate('d m Y, H:i:s', $MinimalVacationTime, 1)
+        );
     }
 
-    display(parsetemplate(gettemplate('settings_vacations'), $_Lang), $_Lang['Vacations_Title'], false);
+    display(parsetemplate(gettemplate('settings_vacations'), $_Lang), $_Lang['VacationMode_Title'], false);
 }
 
 ?>

@@ -44,14 +44,8 @@ if (!$_UseLang) {
     die();
 }
 
-$_Install_IsOnLocalhost = false;
 $_Install_ConfigFile = 'config';
 $_Install_ConfigDirectory = './config';
-
-if ($_SERVER['SERVER_ADDR'] == '127.0.0.1' OR $_SERVER['SERVER_ADDR'] == '::1') {
-    $_Install_ConfigFile = 'config.localhost';
-    $_Install_IsOnLocalhost = true;
-}
 
 include('./utils/determine_required_fields.php');
 include('./utils/normalize_config_inputs.php');
@@ -62,10 +56,6 @@ include('./utils/verify_requirements.php');
 includeLang();
 
 $_Lang['PHP_CurrentLangISOCode'] = $_UseLang;
-
-if (!$_Install_IsOnLocalhost) {
-    $_Lang['PHP_HideLocalhostInfo'] = 'display: none;';
-}
 
 // Check Requirements
 $requirementsVerificationResult = verify_requirements([
@@ -281,6 +271,12 @@ if (!$_Install_SaveRegisterJS) {
     die();
 }
 
+$sessionCookieName = $_Install_Vars['uni_gamename'];
+$sessionCookieName = strtoupper($sessionCookieName);
+$sessionCookieName = preg_replace('/\s+/', '_', $sessionCookieName);
+$sessionCookieName = preg_replace('/\.+/', '_', $sessionCookieName);
+$sessionCookieName = $sessionCookieName . '_CK';
+
 // Now, final try - call every query
 $_Install_QueriesData = [
     'prefix'                                        => $_Install_Vars['dbconfig_prefix'],
@@ -292,10 +288,7 @@ $_Install_QueriesData = [
     'Config_DefenseDebris'                          => $_Install_Vars['uni_defensedebris'],
     'Config_MissileDebris'                          => $_Install_Vars['uni_missiledebris'],
     'Config_InitialFields'                          => $_Install_Vars['uni_motherfields'],
-    'Config_CookieName'                             => (
-        preg_replace('/\s+/', '', strtoupper($_Install_Vars['uni_gamename'])) .
-        '_CK'
-    ),
+    'Config_CookieName'                             => $sessionCookieName,
     'Config_NoobProtection_Enable'                  => (
         $_Install_Vars['uni_noobprt_enable'] ?
         '1' :

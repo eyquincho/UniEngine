@@ -1,9 +1,16 @@
 <?php
 
+use UniEngine\Engine\Modules\Development;
+use UniEngine\Engine\Includes\Helpers\World\Elements;
+use UniEngine\Engine\Includes\Helpers\World\Resources;
+use UniEngine\Engine\Modules\Development\Components\ModernQueue;
+use UniEngine\Engine\Includes\Helpers\Planets;
+use UniEngine\Engine\Includes\Helpers\Users;
+
 function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
 {
     global    $_Lang, $_SkinPath, $_GameConfig, $_GET, $_EnginePath,
-            $_Vars_GameElements, $_Vars_ElementCategories, $_Vars_ResProduction, $_Vars_MaxElementLevel, $_Vars_PremiumBuildings, $_Vars_IndestructibleBuildings;
+            $_Vars_GameElements, $_Vars_ElementCategories, $_Vars_MaxElementLevel, $_Vars_IndestructibleBuildings;
 
     include($_EnginePath.'includes/functions/GetElementTechReq.php');
     includeLang('worldElements.detailed');
@@ -27,231 +34,104 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
     $TPL['list_disabled']                = gettemplate('buildings_compact_list_disabled');
     $TPL['list_partdisabled']            = parsetemplate($TPL['list_disabled'], array('AddOpacity' => 'dPart'));
     $TPL['list_disabled']                = parsetemplate($TPL['list_disabled'], array('AddOpacity' => ''));
-    $TPL['queue_topinfo']                = gettemplate('buildings_compact_queue_topinfo');
     $TPL['infobox_body']                = gettemplate('buildings_compact_infobox_body_structures');
     $TPL['infobox_levelmodif']            = gettemplate('buildings_compact_infobox_levelmodif');
     $TPL['infobox_req_res']                = gettemplate('buildings_compact_infobox_req_res');
-    $TPL['infobox_req_desttable']        = gettemplate('buildings_compact_infobox_req_desttable');
-    $TPL['infobox_req_destres']            = gettemplate('buildings_compact_infobox_req_destres');
     $TPL['infobox_additionalnfo']        = gettemplate('buildings_compact_infobox_additionalnfo');
     $TPL['infobox_req_selector_single'] = gettemplate('buildings_compact_infobox_req_selector_single');
     $TPL['infobox_req_selector_dual']    = gettemplate('buildings_compact_infobox_req_selector_dual');
 
     // Handle Commands
-    if(!isOnVacation($CurrentUser))
-    {
-        if(!empty($_GET['cmd']))
-        {
-            $TheCommand = $_GET['cmd'];
-            if($TheCommand == 'cancel')
-            {
-                include($_EnginePath.'includes/functions/CancelBuildingFromQueue.php');
-                $ShowID = CancelBuildingFromQueue($CurrentPlanet, $CurrentUser);
-                $CommandDone = true;
-            }
-            else if($TheCommand == 'remove')
-            {
-                if(!empty($_GET['listid']))
-                {
-                    include($_EnginePath.'includes/functions/RemoveBuildingFromQueue.php');
-                    $ShowID = RemoveBuildingFromQueue($CurrentPlanet, $CurrentUser, intval($_GET['listid']));
-                    $CommandDone = true;
-                }
-            }
-            else if($TheCommand == 'insert' OR $TheCommand == 'destroy')
-            {
-                if(!empty($_GET['building']))
-                {
-                    $ElementID = intval($_GET['building']);
-                    if(in_array($ElementID, $_Vars_ElementCategories['buildOn'][$CurrentPlanet['planet_type']]))
-                    {
-                        if($TheCommand == 'insert')
-                        {
-                            $AddMode = true;
-                        }
-                        else
-                        {
-                            $AddMode = false;
-                        }
-                        if($ElementID == 31 AND $CurrentUser['techQueue_Planet'] > 0 AND $CurrentUser['techQueue_EndTime'] > 0 AND $_GameConfig['BuildLabWhileRun'] != 1)
-                        {
-                            $BlockCommand = true;
-                        }
-                        else
-                        {
-                            $BlockCommand = false;
-                        }
-                        if($BlockCommand !== true)
-                        {
-                            include($_EnginePath.'includes/functions/AddBuildingToQueue.php');
-                            AddBuildingToQueue($CurrentPlanet, $CurrentUser, $ElementID, $AddMode);
-                            $CommandDone = true;
-                        }
+    $cmdResult = Development\Input\UserCommands\handleStructureCommand(
+        $CurrentUser,
+        $CurrentPlanet,
+        $_GET,
+        [
+            "timestamp" => $Now
+        ]
+    );
 
-                        $ShowID = $ElementID;
-                    }
-                }
-            }
-
-            if($ShowID > 0)
-            {
-                $ShowElementID = $ShowID;
-            }
-
-            if($CommandDone === true)
-            {
-                if(HandlePlanetQueue_StructuresSetNext($CurrentPlanet, $CurrentUser, $Now, true) === false)
-                {
-                    include($_EnginePath.'includes/functions/BuildingSavePlanetRecord.php');
-                    BuildingSavePlanetRecord($CurrentPlanet);
-                }
-            }
-        }
+    if ($cmdResult['isSuccess']) {
+        $ShowElementID = $cmdResult['payload']['elementID'];
     }
     // End of - Handle Commands
 
+    $queueComponent = ModernQueue\render([
+        'planet' => &$CurrentPlanet,
+        'queue' => Planets\Queues\Structures\parseQueueString($CurrentPlanet['buildQueue']),
+        'queueMaxLength' => Users\getMaxStructuresQueueLength($CurrentUser),
+        'timestamp' => $Now,
+        'infoComponents' => [],
+
+        'getQueueElementCancellationLinkHref' => function ($queueElement) {
+            $queueElementIdx = $queueElement['queueElementIdx'];
+            $listID = $queueElement['listID'];
+            $isFirstQueueElement = ($queueElementIdx === 0);
+            $cmd = ($isFirstQueueElement ? "cancel" : "remove");
+
+            return buildHref([
+                'path' => 'buildings.php',
+                'query' => [
+                    'cmd' => $cmd,
+                    'listid' => $listID
+                ]
+            ]);
+        }
+    ]);
+
+    $Parse['Create_Queue'] = $queueComponent['componentHTML'];
+
     // Parse Queue
     $CurrentQueue = $CurrentPlanet['buildQueue'];
-    if(!empty($CurrentQueue))
-    {
+    if (!empty($CurrentQueue)) {
         $LockResources['metal'] = 0;
         $LockResources['crystal'] = 0;
         $LockResources['deuterium'] = 0;
 
         $CurrentQueue = explode(';', $CurrentQueue);
         $QueueIndex = 0;
-        foreach($CurrentQueue as $QueueID => $QueueData)
-        {
+
+        foreach ($CurrentQueue as $QueueID => $QueueData) {
             $QueueData = explode(',', $QueueData);
             $BuildEndTime = $QueueData[3];
-            if($BuildEndTime >= $Now)
-            {
-                $ListID = $QueueIndex + 1;
-                $ElementID = $QueueData[0];
-                $ElementLevel = $QueueData[1];
-                $ElementMode = $QueueData[4];
-                $ElementBuildtime = $BuildEndTime - $Now;
-                $ElementName = $_Lang['tech'][$ElementID];
-                if($ElementMode != 'build')
-                {
-                    $ElementLevel += 1;
-                    $ElementModeColor = 'red';
-                    $ThisForDestroy = true;
-                }
-                else
-                {
-                    $ElementModeColor = 'lime';
-                    $ThisForDestroy = false;
-                }
-                if($QueueIndex == 0)
-                {
-                    include($_EnginePath.'/includes/functions/InsertJavaScriptChronoApplet.php');
 
-                    $QueueParser[] = array
-                    (
-                        'ChronoAppletScript'    => InsertJavaScriptChronoApplet(
-                            'QueueFirstTimer',
-                            '',
-                            $BuildEndTime,
-                            true,
-                            false,
-                            'function() { onQueuesFirstElementFinished(); }'
-                        ),
-                        'EndTimer'                => pretty_time($ElementBuildtime, true),
-                        'SkinPath'                => $_SkinPath,
-                        'ElementID'                => $ElementID,
-                        'Name'                    => $ElementName,
-                        'LevelText'                => $_Lang['level'],
-                        'Level'                    => $ElementLevel,
-                        'ModeText'                => ($ThisForDestroy ? $_Lang['Queue_Mode_Destroy_1'] : $_Lang['Queue_Mode_Build_1']),
-                        'ModeColor'                => $ElementModeColor,
-                        'EndText'                => $_Lang['Queue_EndTime'],
-                        'EndDate'                => date('d/m | H:i:s', $BuildEndTime),
-                        'EndTitleBeg'            => $_Lang['Queue_EndTitleBeg'],
-                        'EndTitleHour'            => $_Lang['Queue_EndTitleHour'],
-                        'EndDateExpand'            => prettyDate('d m Y', $BuildEndTime, 1),
-                        'EndTimeExpand'            => date('H:i:s', $BuildEndTime),
-                        'PremBlock'                => (isset($_Vars_PremiumBuildings[$ElementID]) && $_Vars_PremiumBuildings[$ElementID] == 1 ? 'premblock' : ''),
-                        'ListID'                => $ListID,
-                        'PlanetID'                => $CurrentPlanet['id'],
-                        'CancelText'            => (isset($_Vars_PremiumBuildings[$ElementID]) && $_Vars_PremiumBuildings[$ElementID] == 1 ? $_Lang['Queue_Cancel_CantCancel'] : ($ThisForDestroy ? $_Lang['Queue_Cancel_Destroy'] : $_Lang['Queue_Cancel_Build']))
-                    );
-                }
-                else
-                {
-                    $QueueParser[] = array
-                    (
-                        'ElementNo'            => $ListID,
-                        'ElementID'            => $ElementID,
-                        'Name'                => $ElementName,
-                        'LevelText'            => $_Lang['level'],
-                        'Level'                => $ElementLevel,
-                        'ModeText'            => ($ThisForDestroy ? $_Lang['Queue_Mode_Destroy_1+'] : $_Lang['Queue_Mode_Build_1+']),
-                        'ModeColor'            => $ElementModeColor,
-                        'EndDate'            => date('d/m H:i:s', $BuildEndTime),
-                        'EndTitleBeg'        => $_Lang['Queue_EndTitleBeg'],
-                        'EndTitleHour'        => $_Lang['Queue_EndTitleHour'],
-                        'EndDateExpand'        => prettyDate('d m Y', $BuildEndTime, 1),
-                        'EndTimeExpand'        => date('H:i:s', $BuildEndTime),
-                        'InfoBox_BuildTime' => ($ThisForDestroy ? $_Lang['InfoBox_DestroyTime'] : $_Lang['InfoBox_BuildTime']),
-                        'BuildTime'            => pretty_time($BuildEndTime - $PreviousBuildEndTime),
-                        'ListID'            => $ListID,
-                        'PlanetID'            => $CurrentPlanet['id'],
-                        'RemoveText'        => $_Lang['Queue_Cancel_Remove']
-                    );
-
-                    $GetResourcesToLock = GetBuildingPrice($CurrentUser, $CurrentPlanet, $ElementID, true, $ThisForDestroy);
-                    $LockResources['metal'] += $GetResourcesToLock['metal'];
-                    $LockResources['crystal'] += $GetResourcesToLock['crystal'];
-                    $LockResources['deuterium'] += $GetResourcesToLock['deuterium'];
-                }
-
-                if(!isset($LevelModifiers[$ElementID]))
-                {
-                    $LevelModifiers[$ElementID] = 0;
-                }
-                if($ThisForDestroy)
-                {
-                    $LevelModifiers[$ElementID] += 1;
-                    $CurrentPlanet[$_Vars_GameElements[$ElementID]] -= 1;
-                    $FieldsModifier += 2;
-                }
-                else
-                {
-                    $LevelModifiers[$ElementID] -= 1;
-                    $CurrentPlanet[$_Vars_GameElements[$ElementID]] += 1;
-                }
-
-                $QueueIndex += 1;
+            if ($BuildEndTime < $Now) {
+                continue;
             }
-            $PreviousBuildEndTime = $BuildEndTime;
+
+            $ElementID = $QueueData[0];
+            $ElementMode = $QueueData[4];
+            $ThisForDestroy = ($ElementMode != 'build');
+
+            if ($QueueIndex != 0) {
+                $GetResourcesToLock = GetBuildingPrice($CurrentUser, $CurrentPlanet, $ElementID, true, $ThisForDestroy);
+                $LockResources['metal'] += $GetResourcesToLock['metal'];
+                $LockResources['crystal'] += $GetResourcesToLock['crystal'];
+                $LockResources['deuterium'] += $GetResourcesToLock['deuterium'];
+            }
+
+            if (!isset($LevelModifiers[$ElementID])) {
+                $LevelModifiers[$ElementID] = 0;
+            }
+            if ($ThisForDestroy) {
+                $LevelModifiers[$ElementID] += 1;
+                $CurrentPlanet[$_Vars_GameElements[$ElementID]] -= 1;
+                $FieldsModifier += 2;
+            } else {
+                $LevelModifiers[$ElementID] -= 1;
+                $CurrentPlanet[$_Vars_GameElements[$ElementID]] += 1;
+            }
+
+            $QueueIndex += 1;
         }
+
         $CurrentPlanet['metal'] -= (isset($LockResources['metal']) ? $LockResources['metal'] : 0);
         $CurrentPlanet['crystal'] -= (isset($LockResources['crystal']) ? $LockResources['crystal'] : 0);
         $CurrentPlanet['deuterium'] -= (isset($LockResources['deuterium']) ? $LockResources['deuterium'] : 0);
 
         $Queue['lenght'] = $QueueIndex;
-        if(!empty($QueueParser))
-        {
-            $Parse['Create_Queue'] = '';
-            foreach($QueueParser as $QueueID => $QueueData)
-            {
-                if($QueueID == 0)
-                {
-                    $ThisTPL = gettemplate('buildings_compact_queue_firstel');
-                }
-                else if($QueueID == 1)
-                {
-                    $ThisTPL = gettemplate('buildings_compact_queue_nextel');
-                }
-                $Parse['Create_Queue'] .= parsetemplate($ThisTPL, $QueueData);
-            }
-        }
-    }
-    else
-    {
+    } else {
         $Queue['lenght'] = 0;
-        $Parse['Create_Queue'] = parsetemplate($TPL['queue_topinfo'], array('InfoText' => $_Lang['Queue_Empty']));
     }
     // End of - Parse Queue
 
@@ -271,24 +151,8 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
     else
     {
         $CanAddToQueue = false;
-        $Parse['Create_Queue'] = parsetemplate($TPL['queue_topinfo'], array('InfoColor' => 'red', 'InfoText' => $_Lang['Queue_Full'])).$Parse['Create_Queue'];
     }
-    if($CurrentUser['engineer_time'] > $Now)
-    {
-        $EnergyMulti = 1.10;
-    }
-    else
-    {
-        $EnergyMulti = 1;
-    }
-    if($CurrentUser['geologist_time'] > $Now)
-    {
-        $ResourceMulti = 1.15;
-    }
-    else
-    {
-        $ResourceMulti = 1;
-    }
+
     $ResImages = array
     (
         'metal' => 'metall',
@@ -314,13 +178,22 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
         'InfoBox_Destroy'                => $_Lang['InfoBox_Destroy'],
         'InfoBox_RequirementsFor'        => $_Lang['InfoBox_RequirementsFor'],
         'InfoBox_ResRequirements'        => $_Lang['InfoBox_ResRequirements'],
-        'InfoBox_TechRequirements'        => $_Lang['InfoBox_TechRequirements'],
         'InfoBox_Requirements_Res'        => $_Lang['InfoBox_Requirements_Res'],
         'InfoBox_Requirements_Tech'        => $_Lang['InfoBox_Requirements_Tech'],
         'InfoBox_BuildTime'                => $_Lang['InfoBox_BuildTime'],
-        'InfoBox_ShowTechReq'            => $_Lang['InfoBox_ShowTechReq'],
-        'InfoBox_ShowResReq'            => $_Lang['InfoBox_ShowResReq'],
     );
+
+    $hasElementsInQueue = ($Queue['lenght'] > 0);
+    $resourceLabels = [
+        'metal'         => $_Lang['Metal'],
+        'crystal'       => $_Lang['Crystal'],
+        'deuterium'     => $_Lang['Deuterium'],
+        'energy'        => $_Lang['Energy'],
+        'energy_max'    => $_Lang['Energy'],
+        'darkEnergy'    => $_Lang['DarkEnergy']
+    ];
+
+    $elementsDestructionDetails = [];
 
     foreach($_Vars_ElementCategories['build'] as $ElementID)
     {
@@ -447,7 +320,7 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
                 $ElementParser['ElementTechDiv'] = GetElementTechReq($CurrentUser, $CurrentPlanet, $ElementID, true);
                 $ElementParser['HideResReqDiv'] = 'hide';
             }
-            if(IsElementBuyable($CurrentUser, $CurrentPlanet, $ElementID, true, false, true) === false)
+            if(IsElementBuyable($CurrentUser, $CurrentPlanet, $ElementID, false) === false)
             {
                 $HasResources = false;
                 if($Queue['lenght'] == 0)
@@ -460,7 +333,7 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
                     $ElementParser['BuildButtonColor'] = 'buildDo_Orange';
                 }
             }
-            if(IsElementBuyable($CurrentUser, $CurrentPlanet, $ElementID, true, true) === false)
+            if(IsElementBuyable($CurrentUser, $CurrentPlanet, $ElementID, true) === false)
             {
                 if($Queue['lenght'] == 0)
                 {
@@ -539,162 +412,107 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
             }
             else
             {
-                $ElementDestroyCost = GetBuildingPrice($CurrentUser, $CurrentPlanet, $ElementID, true, true, true);
-                $ElementParser['Create_DestroyTips_Res'] = '';
-                foreach($ElementDestroyCost as $Key => $Value)
-                {
-                    if($Value > 0)
-                    {
-                        $ResColor = '';
-                        if($Key != 'darkEnergy')
-                        {
-                            if($CurrentPlanet[$Key] < $Value)
-                            {
-                                if($Queue['lenght'] > 0)
-                                {
-                                    $ResColor = 'orange';
-                                }
-                                else
-                                {
-                                    $ResColor = 'red';
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if($CurrentUser[$Key] < $Value)
-                            {
-                                if($Queue['lenght'] > 0)
-                                {
-                                    $ResColor = 'orange';
-                                }
-                                else
-                                {
-                                    $ResColor = 'red';
-                                }
-                            }
-                        }
-                        $ElementParser['ElementPrices'] = array('Name' => $ResLangs[$Key], 'Color' => $ResColor, 'Value' => prettyNumber($Value));
-                        $ElementParser['Create_DestroyTips_Res'] .= trim(
-                            parsetemplate(
-                                $TPL['infobox_req_destres'],
-                                $ElementParser['ElementPrices']
-                            )
-                        );
-                    }
+                $downgradeCost = Elements\calculatePurchaseCost(
+                    $ElementID,
+                    Elements\getElementState($ElementID, $CurrentPlanet, $CurrentUser),
+                    [
+                        'purchaseMode' => Elements\PurchaseMode::Downgrade
+                    ]
+                );
+
+                $elementDowngradeResources = [];
+
+                foreach ($downgradeCost as $costResourceKey => $costValue) {
+                    $currentResourceState = Resources\getResourceState(
+                        $costResourceKey,
+                        $CurrentUser,
+                        $CurrentPlanet
+                    );
+
+                    $resourceLeft = ($currentResourceState - $costValue);
+                    $hasResourceDeficit = ($resourceLeft < 0);
+
+                    $resourceCostColor = (
+                        !$hasResourceDeficit ?
+                        '' :
+                        (
+                            $hasElementsInQueue ?
+                            'orange' :
+                            'red'
+                        )
+                    );
+
+                    $elementDowngradeResources[] = [
+                        'name' => $resourceLabels[$costResourceKey],
+                        'color' => $resourceCostColor,
+                        'value' => prettyNumber($costValue)
+                    ];
                 }
-                if(!isset($Parse['Create_DestroyTips']))
-                {
-                    $Parse['Create_DestroyTips'] = '';
-                }
-                $Parse['Create_DestroyTips'] .= parsetemplate($TPL['infobox_req_desttable'], array
-                (
-                    'ElementID' => $ElementID,
-                    'InfoBox_DestroyCost' => $_Lang['InfoBox_DestroyCost'],
-                    'InfoBox_DestroyTime' => $_Lang['InfoBox_DestroyTime'],
-                    'Resources' => $ElementParser['Create_DestroyTips_Res'],
-                    'DestroyTime' => pretty_time(GetBuildingTime($CurrentUser, $CurrentPlanet, $ElementID) / 2)
-                ));
+
+                $destructionTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $ElementID) / 2;
+
+                $elementsDestructionDetails[$ElementID] = [
+                    'resources' => $elementDowngradeResources,
+                    'destructionTime' => pretty_time($destructionTime)
+                ];
             }
 
             if(in_array($ElementID, $_Vars_ElementCategories['prod']))
             {
-                // Show energy on BuildingPage
-                $BuildLevelFactor = 10;
-                $BuildTemp = $CurrentPlanet['temp_max'];
-                $CurrentBuildtLvl = $CurrentLevel;
-                $BuildLevel = ($CurrentBuildtLvl > 0) ? $CurrentBuildtLvl : 0;
-                $Production = array();
-                $Needs = array();
-                $ThisResource = '';
+                // Calculate theoretical production increase
+                $thisLevelProduction = getElementProduction(
+                    $ElementID,
+                    $CurrentPlanet,
+                    $CurrentUser,
+                    [
+                        'useCurrentBoosters' => true,
+                        'currentTimestamp' => $Now,
+                        'customLevel' => $CurrentLevel,
+                        'customProductionFactor' => 10
+                    ]
+                );
+                $nextLevelProduction = getElementProduction(
+                    $ElementID,
+                    $CurrentPlanet,
+                    $CurrentUser,
+                    [
+                        'useCurrentBoosters' => true,
+                        'currentTimestamp' => $Now,
+                        'customLevel' => ($CurrentLevel + 1),
+                        'customProductionFactor' => 10
+                    ]
+                );
 
-                // Calculate ThisLevel Income
-                if($ElementID <= 3)
-                {
-                    if($ElementID == 1)
-                    {
-                        $ThisResource = $_Lang['Metal'];
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['metal']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    else if($ElementID == 2)
-                    {
-                        $ThisResource = $_Lang['Crystal'];
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['crystal']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    else if($ElementID == 3)
-                    {
-                        $ThisResource = $_Lang['Deuterium'];
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['deuterium']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    $Needs[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['energy']));
-                }
-                else
-                {
-                    if($ElementID == 12)
-                    {
-                        $Needs[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['deuterium']) * $_GameConfig['resource_multiplier']);
-                    }
-                    $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['energy']) * $EnergyMulti);
-                }
-                // Calculate NextLevel Income
-                $BuildLevel += 1;
-                if($ElementID <= 3)
-                {
-                    if($ElementID == 1)
-                    {
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['metal']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    else if($ElementID == 2)
-                    {
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['crystal']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    else if($ElementID == 3)
-                    {
-                        $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['deuterium']) * $_GameConfig['resource_multiplier'] * $ResourceMulti);
-                    }
-                    $Needs[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['energy']));
-                }
-                else
-                {
-                    if($ElementID == 12)
-                    {
-                        $Needs[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['deuterium']) * $_GameConfig['resource_multiplier']);
-                    }
-                    $Production[] = floor(eval($_Vars_ResProduction[$ElementID]['formule']['energy']) * $EnergyMulti);
-                }
-                // Calculate Difference
-                $Production = prettyNumber($Production[1] - $Production[0]);
-                if(!isset($Needs[1]))
-                {
-                    $Needs[1] = 0;
-                }
-                if(!isset($Needs[0]))
-                {
-                    $Needs[0] = 0;
-                }
-                $Needs = prettyNumber($Needs[1] - $Needs[0]);
+                foreach ($nextLevelProduction as $resourceKey => $nextLevelResourceProduction) {
+                    $difference = ($nextLevelResourceProduction - $thisLevelProduction[$resourceKey]);
 
-                if($ElementID >= 1 AND $ElementID <= 3)
-                {
-                    $ElementParser['AdditionalNfo'][] = parsetemplate($TPL['infobox_additionalnfo'], array('Label' => $_Lang['Energy'], 'ValueClasses' => 'red', 'Value' => $Needs));
-                    $ElementParser['AdditionalNfo'][] = parsetemplate($TPL['infobox_additionalnfo'], array('Label' => $ThisResource, 'ValueClasses' => 'lime', 'Value' => '+'.$Production));
-                }
-                else if($ElementID == 4 OR $ElementID == 12)
-                {
-                    if($ElementID != 12)
-                    {
-                        $ElementParser['AdditionalNfo'][] = parsetemplate($TPL['infobox_additionalnfo'], array('Label' => $_Lang['Energy'], 'ValueClasses' => 'lime', 'Value' => '+'.$Production));
+                    if ($difference == 0) {
+                        continue;
                     }
-                    else
-                    {
-                        $ElementParser['AdditionalNfo'][] = parsetemplate($TPL['infobox_additionalnfo'], array('Label' => $_Lang['Energy'], 'ValueClasses' => 'lime', 'Value' => '+'.$Production));
-                        $ElementParser['AdditionalNfo'][] = parsetemplate($TPL['infobox_additionalnfo'], array('Label' => $_Lang['Deuterium'], 'ValueClasses' => 'red', 'Value' => $Needs));
-                    }
+
+                    $differenceFormatted = prettyNumber($difference);
+                    $label = $resourceLabels[$resourceKey];
+
+                    $ElementParser['AdditionalNfo'][] = parsetemplate(
+                        $TPL['infobox_additionalnfo'],
+                        [
+                            'Label' => $label,
+                            'ValueClasses' => (
+                                $difference >= 0 ?
+                                'lime' :
+                                'red'
+                            ),
+                            'Value' => (
+                                $difference >= 0 ?
+                                ('+' . $differenceFormatted) :
+                                $differenceFormatted
+                            )
+                        ]
+                    );
                 }
             }
 
-            if(!empty($ElementParser['AdditionalNfo']))
-            {
+            if(!empty($ElementParser['AdditionalNfo'])) {
                 $ElementParser['AdditionalNfo'] = implode('', $ElementParser['AdditionalNfo']);
             }
             $ElementParser['ElementRequirementsHeadline'] = parsetemplate($ElementParser['ElementRequirementsHeadline'], $ElementParser);
@@ -779,6 +597,7 @@ function StructuresBuildingPage(&$CurrentPlanet, $CurrentUser)
     $Parse['Insert_Overview_Fields_Max'] = prettyNumber($MaxFields);
     $Parse['Insert_Overview_Fields_Percent'] = sprintf('%0.2f', ($CurrentPlanet['field_current'] / $MaxFields) * 100);
     $Parse['Insert_Overview_Temperature'] = sprintf($_Lang['Overview_Form_Temperature'], $CurrentPlanet['temp_min'], $CurrentPlanet['temp_max']);
+    $Parse['PHPData_ElementsDestructionDetailsJSON'] = json_encode($elementsDestructionDetails);
 
     $Page = parsetemplate(gettemplate('buildings_compact_body_structures'), $Parse);
 

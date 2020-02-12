@@ -1,8 +1,12 @@
 <?php
 
+use UniEngine\Engine\Modules\Development;
+use UniEngine\Engine\Modules\Development\Components\LegacyQueue;
+use UniEngine\Engine\Includes\Helpers\Planets;
+
 function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
 {
-    global $_EnginePath, $_Vars_ResProduction, $_Lang, $_Vars_GameElements, $_Vars_ElementCategories,
+    global $_EnginePath, $_Lang, $_Vars_GameElements, $_Vars_ElementCategories,
            $_SkinPath, $_GameConfig, $_GET, $_Vars_PremiumBuildingPrices, $_Vars_MaxElementLevel, $_Vars_PremiumBuildings;
 
     $BuildingPage = '';
@@ -20,80 +24,20 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
     PlanetResourceUpdate($CurrentUser, $CurrentPlanet, $Now);
 
     // Handle Commands
-    if(!isOnVacation($CurrentUser))
-    {
-        if(isset($_GET['cmd']))
-        {
-            $bDoItNow = false;
-            $TheCommand = $_GET['cmd'];
-            if(!empty($_GET['building']))
-            {
-                $Element = round(trim($_GET['building']));
-            }
-            if(!empty($_GET['listid']))
-            {
-                $ListID = round(trim($_GET['listid']));
-            }
+    Development\Input\UserCommands\handleStructureCommand(
+        $CurrentUser,
+        $CurrentPlanet,
+        $_GET,
+        [
+            "timestamp" => $Now
+        ]
+    );
+    // End of - Handle Commands
 
-            if(isset($Element))
-            {
-                if(in_array($Element, $_Vars_ElementCategories['buildOn'][$CurrentPlanet['planet_type']]))
-                {
-                    $bDoItNow = true;
-                }
-            }
-            else if(isset($ListID))
-            {
-                $bDoItNow = true;
-            }
-            if($bDoItNow == true)
-            {
-                switch($TheCommand)
-                {
-                    case 'cancel':
-                        // Cancel Current Building
-                        include($_EnginePath.'includes/functions/CancelBuildingFromQueue.php');
-                        CancelBuildingFromQueue($CurrentPlanet, $CurrentUser);
-                        $CommandDone = true;
-                        break;
-                    case 'remove':
-                        // Remove planned Building from Queue
-                        include($_EnginePath.'includes/functions/RemoveBuildingFromQueue.php');
-                        RemoveBuildingFromQueue($CurrentPlanet, $CurrentUser, $ListID);
-                        $CommandDone = true;
-                        break;
-                    case 'insert':
-                        // Insert into Queue (to Build)
-                        include($_EnginePath.'includes/functions/AddBuildingToQueue.php');
-                        AddBuildingToQueue($CurrentPlanet, $CurrentUser, $Element, true);
-                        $CommandDone = true;
-                        break;
-                    case 'destroy':
-                        // Insert into Queue (to Destroy)
-                        include($_EnginePath.'includes/functions/AddBuildingToQueue.php');
-                        AddBuildingToQueue($CurrentPlanet, $CurrentUser, $Element, false);
-                        $CommandDone = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
+    $buildingsQueue = Planets\Queues\Structures\parseQueueString($CurrentPlanet['buildQueue']);
+    $buildingsQueueLength = count($buildingsQueue);
 
-            if($CommandDone === true)
-            {
-                if(HandlePlanetQueue_StructuresSetNext($CurrentPlanet, $CurrentUser, $Now, true) === false)
-                {
-                    include($_EnginePath.'includes/functions/BuildingSavePlanetRecord.php');
-                    BuildingSavePlanetRecord($CurrentPlanet);
-                }
-            }
-        }
-    }
-
-    include($_EnginePath.'includes/functions/ShowBuildingQueue.php');
-    $Queue = ShowBuildingQueue($CurrentPlanet, $CurrentUser);
-
-    if($Queue['lenght'] < ((isPro($CurrentUser)) ? MAX_BUILDING_QUEUE_SIZE_PRO : MAX_BUILDING_QUEUE_SIZE ))
+    if($buildingsQueueLength < ((isPro($CurrentUser)) ? MAX_BUILDING_QUEUE_SIZE_PRO : MAX_BUILDING_QUEUE_SIZE ))
     {
         $CanBuildElement = true;
     }
@@ -102,14 +46,25 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
         $CanBuildElement = false;
     }
 
-    if($CurrentUser['engineer_time'] > $Now)
-    {
-        $EnergyMulti = 1.10;
-    }
-    else
-    {
-        $EnergyMulti = 1;
-    }
+    $queueComponent = LegacyQueue\render([
+        'queue' => $buildingsQueue,
+        'currentTimestamp' => $Now,
+
+        'getQueueElementCancellationLinkHref' => function ($queueElement) {
+            $queueElementIdx = $queueElement['queueElementIdx'];
+            $listID = $queueElement['listID'];
+            $isFirstQueueElement = ($queueElementIdx === 0);
+            $cmd = ($isFirstQueueElement ? "cancel" : "remove");
+
+            return buildHref([
+                'path' => 'buildings.php',
+                'query' => [
+                    'cmd' => $cmd,
+                    'listid' => $listID
+                ]
+            ]);
+        }
+    ]);
 
     if(!empty($CurrentPlanet['buildQueue']))
     {
@@ -166,7 +121,7 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
         {
             $ElementName = $_Lang['tech'][$Element];
             $CurrentMaxFields = CalculateMaxPlanetFields($CurrentPlanet);
-            if($CurrentPlanet['field_current'] < ($CurrentMaxFields - $Queue['lenght']))
+            if($CurrentPlanet['field_current'] < ($CurrentMaxFields - $buildingsQueueLength))
             {
                 $RoomIsOk = true;
             }
@@ -189,71 +144,45 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
             }
             $parse['nivel'] = ($BuildingLevel == 0) ? '' : " ({$_Lang['level']} {$PlanetLevel})";
 
-            if(in_array($Element, array(1, 2, 3, 4, 12)))
-            {
+            if (in_array($Element, array(1, 2, 3, 4, 12))) {
                 // Show energy on BuildingPage
-                $Prod[4] = null;
-                $Prod[3] = null;
-                $ActualNeedDeut = null;
-                $BuildLevelFactor = 10;
-                $BuildTemp = $CurrentPlanet['temp_max'];
-                $CurrentBuildtLvl = $BuildingLevel;
-                $BuildLevel = ($CurrentBuildtLvl > 0) ? $CurrentBuildtLvl : 0;
+                $thisLevelProduction = getElementProduction(
+                    $Element,
+                    $CurrentPlanet,
+                    $CurrentUser,
+                    [
+                        'useCurrentBoosters' => true,
+                        'currentTimestamp' => $Now,
+                        'customLevel' => $BuildingLevel,
+                        'customProductionFactor' => 10
+                    ]
+                );
+                $nextLevelProduction = getElementProduction(
+                    $Element,
+                    $CurrentPlanet,
+                    $CurrentUser,
+                    [
+                        'useCurrentBoosters' => true,
+                        'currentTimestamp' => $Now,
+                        'customLevel' => ($BuildingLevel + 1),
+                        'customProductionFactor' => 10
+                    ]
+                );
 
-                // --- Calculate ThisLevel Income
-                if($Element == 12)
-                {
-                    $Prod[3] = (floor(eval($_Vars_ResProduction[$Element]['formule']['deuterium']) * $_GameConfig['resource_multiplier']));
-                    $ActualNeedDeut = $Prod[3];
-                }
-                if($Element == 4 OR $Element == 12)
-                {
-                    // If it's Power Station
-                    $Prod[4] = (floor(eval($_Vars_ResProduction[$Element]['formule']['energy']) * $EnergyMulti));
-                }
-                else
-                {
-                    // If it's Mine
-                    $Prod[4] = (floor(eval($_Vars_ResProduction[$Element]['formule']['energy'])));
-                }
-                $ActualNeed = $Prod[4];
+                $energyDifference = ($nextLevelProduction['energy'] - $thisLevelProduction['energy']);
+                $deuteriumDifference = ($nextLevelProduction['deuterium'] - $thisLevelProduction['deuterium']);
 
-                // --- Calculate NextLevel Income
-                $BuildLevel += 1;
-                if($Element == 12)
-                {
-                    $Prod[3] = (floor(eval($_Vars_ResProduction[$Element]['formule']['deuterium']) * $_GameConfig['resource_multiplier']));
-                }
-                if($Element == 4 OR $Element == 12)
-                {
-                    // If it's Power Station
-                    $Prod[4] = (floor(eval($_Vars_ResProduction[$Element]['formule']['energy']) * $EnergyMulti));
-                }
-                else
-                {
-                    // If it's Mine
-                    $Prod[4] = (floor(eval($_Vars_ResProduction[$Element]['formule']['energy'])));
-                }
+                $energyDifferenceFormatted = prettyColorNumber(floor($energyDifference));
 
-                $EnergyNeed = prettyColorNumber(floor($Prod[4] - $ActualNeed));
+                if ($Element >= 1 && $Element <= 3) {
+                    $parse['build_need_diff'] = "(<span class=\"red\">{$_Lang['Energy']}: {$energyDifferenceFormatted}</span>)";
+                } else if ($Element == 4) {
+                    $parse['build_need_diff'] = "(<span class=\"lime\">{$_Lang['Energy']}: +{$energyDifferenceFormatted}</span>)";
+                } else if ($Element == 12) {
+                    $deuteriumDifferenceFormatted = prettyColorNumber(floor($deuteriumDifference));
 
-                if($Element >= 1 AND $Element <= 3)
-                {
-                    $parse['build_need_diff'] = "(<span class=\"red\">{$_Lang['Energy']}: {$EnergyNeed}</span>)";
+                    $parse['build_need_diff'] = "(<span class=\"lime\">{$_Lang['Energy']}: +{$energyDifferenceFormatted}</span> | <span class=\"red\">{$_Lang['Deuterium']}: {$deuteriumDifferenceFormatted}</span>)";
                 }
-                else if($Element == 4 OR $Element == 12)
-                {
-                    $DeuteriumNeeded = prettyColorNumber(floor($Prod[3] - $ActualNeedDeut));
-                    if($Element != 12)
-                    {
-                        $parse['build_need_diff'] = "(<span class=\"lime\">{$_Lang['Energy']}: +{$EnergyNeed}</span>)";
-                    }
-                    else
-                    {
-                        $parse['build_need_diff'] = "(<span class=\"lime\">{$_Lang['Energy']}: +{$EnergyNeed}</span> | <span class=\"red\">{$_Lang['Deuterium']}: {$DeuteriumNeeded}</span>)";
-                    }
-                }
-                $BuildLevel = 0;
             }
 
             $parse['n'] = $ElementName;
@@ -271,7 +200,7 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
                         $CurrentPlanet[$Key] -= $Value;
                     }
                 }
-                $HaveRessources = IsElementBuyable($CurrentUser, $CurrentPlanet, $Element, true, false);
+                $HaveRessources = IsElementBuyable($CurrentUser, $CurrentPlanet, $Element, false);
                 $ElementBuildTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
                 $parse['time'] = ShowBuildTime($ElementBuildTime);
                 $parse['price'] = GetElementPrice($CurrentUser, $CurrentPlanet, $Element);
@@ -308,7 +237,7 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
 
                 if(isset($_Vars_PremiumBuildings[$Element]) && $_Vars_PremiumBuildings[$Element] == 1)
                 {
-                    $parse['rest_price'] = "<br/><font color=\"#7f7f7f\">{$_Lang['Rest_ress']}: {$_Lang['DarkEnergy']}";
+                    $parse['rest_price'] = "<br/><font color=\"#7f7f7f\">{$_Lang['ResourcesLeft']}: {$_Lang['DarkEnergy']}";
                     $parse['price'] = "{$_Lang['Requires']}: {$_Lang['DarkEnergy']} <span class=\"noresources\">";
                     if($CurrentUser['darkEnergy'] < $_Vars_PremiumBuildingPrices[$Element])
                     {
@@ -338,7 +267,7 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
                 }
                 else if($RoomIsOk AND $CanBuildElement)
                 {
-                    if($Queue['lenght'] == 0)
+                    if($buildingsQueueLength == 0)
                     {
                         if($NextBuildLevel == 1)
                         {
@@ -417,22 +346,11 @@ function BatimentBuildingPage(&$CurrentPlanet, $CurrentUser)
 
     $parse = $_Lang;
 
-    if($Queue['lenght'] > 0)
-    {
-        include($_EnginePath.'includes/functions/InsertBuildListScript.php');
-        $parse['BuildListScript'] = InsertBuildListScript('buildings');
-        $parse['BuildList'] = $Queue['buildlist'];
-    }
-    else
-    {
-        $parse['BuildListScript'] = '';
-        $parse['BuildList'] = '';
-    }
-
     $parse['planet_field_current'] = $CurrentPlanet['field_current'];
     $parse['planet_field_max'] = CalculateMaxPlanetFields($CurrentPlanet);
     $parse['field_libre'] = $parse['planet_field_max'] - $CurrentPlanet['field_current'];
 
+    $parse['BuildList'] = $queueComponent['componentHTML'];
     $parse['BuildingsList'] = $BuildingPage;
 
     display(parsetemplate(gettemplate('buildings_builds'), $parse), $_Lang['Builds']);
