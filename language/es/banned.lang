@@ -1,15 +1,15 @@
 <?php
 
-$_Lang['ban_title']             = 'Banned players';
-$_Lang['ban_name']              = 'Player';
-$_Lang['ban_reason']            = 'Reason';
-$_Lang['ban_from']              = 'Banned since';
-$_Lang['ban_to']                = 'Ban expires';
-$_Lang['ban_by']                = 'Banned by';
-$_Lang['NoBannedPPL']           = 'No banned players!';
-$_Lang['CountOfBannedPPL']      = 'Players banned in total';
-$_Lang['Reason_NotSpecified']   = '<b class="red">Not publicly available</b>';
+$_Lang['ban_title']             = 'Baneados';
+$_Lang['ban_name']              = 'Jugador';
+$_Lang['ban_reason']            = 'Motivo';
+$_Lang['ban_from']              = 'Desde';
+$_Lang['ban_to']                = 'Hasta';
+$_Lang['ban_by']                = 'Por';
+$_Lang['NoBannedPPL']           = 'No hay jugadores baneados!';
+$_Lang['CountOfBannedPPL']      = 'Jugadores baneados en total';
+$_Lang['Reason_NotSpecified']   = '<b class="red">No disponible</b>';
 
-$_Lang['ban_bysys']             = 'System';
+$_Lang['ban_bysys']             = 'Sistema';
 
 ?>
