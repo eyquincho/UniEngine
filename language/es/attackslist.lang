@@ -1,24 +1,24 @@
 <?php
 
-$_Lang['Bash_Title']                = 'List of today\'s aggressive flights';
+$_Lang['Bash_Title']                = 'Lista de ataques agresivos de hoy';
 
-$_Lang['Bash_Desc']                 = 'The table below represents a list of all today\'s aggressive flights sent by you towards other players, which are covered by the Bash Rule (Game rules: <a href="rules.php#rule_3_6" target="_blank" class="orange">3.6. Bash</a>). All of the flights are counted from midnight (00:00 server\'s time).<br/>Please note that after exceeding the Bash Limit, the victim might file a report...';
+$_Lang['Bash_Desc']                 = 'La tabla inferior muestrala lista de todos los ataques agresivos enviados por ti hacia otros jugadores y que cumplen las reglas (Reglas del juego: <a href="rules.php#rule_3_6" target="_blank" class="orange">3.6. Bash</a>). Todos los vuelos se cuentan desde medianoche (00.00 hora del servidor).<br/> Ten en cuenta que si superas el número de ataques límite diario, el defensor puede poner una queja...';
 
-$_Lang['Bash_Header']               = 'List of aggressive flights';
+$_Lang['Bash_Header']               = 'Lista de vuelos agresivos';
 
-$_Lang['Bash_NoAttacksToday']       = 'No aggressive flights covered by Bash Rule';
+$_Lang['Bash_NoAttacksToday']       = 'No hubo ataques';
 
-$_Lang['Bash_Username']             = 'Player / Planet';
-$_Lang['Bash_BashCount']            = 'Flights count';
+$_Lang['Bash_Username']             = 'Jugador / Planeta';
+$_Lang['Bash_BashCount']            = 'Número de vuelos';
 $_Lang['Bash_Status']               = 'Status';
-$_Lang['Bash_CordPlanet']           = 'Planet';
-$_Lang['Bash_CordMoon']             = 'Moon';
+$_Lang['Bash_CordPlanet']           = 'Planeta';
+$_Lang['Bash_CordMoon']             = 'Luna';
 
-$_Lang['Bash_StatusOKLeft']         = 'Aggressive flights left: %s';
-$_Lang['Bash_Status0Left']          = 'Limit reached';
-$_Lang['Bash_StatusExceededUser']   = 'Flights per player limit exceeded!';
-$_Lang['Bash_StatusExceededPlanet'] = 'Flights per %s limit exceeded!';
-$_Lang['Bash_Exceeded_Planet']      = 'planet';
-$_Lang['Bash_Exceeded_Moon']        = 'moon';
+$_Lang['Bash_StatusOKLeft']         = 'Vuelos agresivos restantes: %s';
+$_Lang['Bash_Status0Left']          = 'Límite alcanzado';
+$_Lang['Bash_StatusExceededUser']   = 'Límite de ataques por jugador alcanzado!';
+$_Lang['Bash_StatusExceededPlanet'] = 'Límite de ataques por %s alcanzado!';
+$_Lang['Bash_Exceeded_Planet']      = 'planeta';
+$_Lang['Bash_Exceeded_Moon']        = 'luna';
 
 ?>
