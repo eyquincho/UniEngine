@@ -1,20 +1,20 @@
 <?php
 
-$_Lang['No_Data']           = 'No data';
-$_Lang['No_id_given']       = 'Entry with the given ID does not exist!';
+$_Lang['No_Data']           = 'No hay datos';
+$_Lang['No_id_given']       = 'La ID introducida no corresponde a ningún elemento';
 
-$_Lang['InfiniteVacation']  = 'Infinite Vacation';
-$_Lang['Ban_Expired']       = 'Ban expired';
-$_Lang['Ban_TimeLeft']      = 'Remaining';
-$_Lang['Ban_expired']       = 'Ban expired!';
+$_Lang['InfiniteVacation']  = 'Vacaciones infinitas';
+$_Lang['Ban_Expired']       = 'Ban expirado';
+$_Lang['Ban_TimeLeft']      = 'Restante';
+$_Lang['Ban_expired']       = 'Ban expirado!';
 
-$_Lang['_ago']              = 'ago';
-$_Lang['_day']              = 'day';
-$_Lang['_days']             = 'days';
-$_Lang['_today']            = 'Today';
-$_Lang['_yesterday']        = 'Yesterday';
-$_Lang['_Since']            = 'Since';
-$_Lang['_Untill']           = 'Util';
-$_Lang['_Duration']         = 'Duration';
+$_Lang['_ago']              = 'atrás';
+$_Lang['_day']              = 'día';
+$_Lang['_days']             = 'dias';
+$_Lang['_today']            = 'Hoy';
+$_Lang['_yesterday']        = 'Ayer';
+$_Lang['_Since']            = 'Desde';
+$_Lang['_Untill']           = 'Hasta';
+$_Lang['_Duration']         = 'Duración';
 
 ?>
