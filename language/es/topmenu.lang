@@ -1,45 +1,45 @@
 <?php
 
-$_Lang['logout']         = 'Logout';
-$_Lang['player']         = 'Player';
-$_Lang['friends']        = 'Friends';
-$_Lang['options']        = 'Settings';
-$_Lang['stats']          = 'Statistics';
-$_Lang['search']         = 'Search';
-$_Lang['notes']          = 'Notes';
-$_Lang['rules']          = 'Rules';
-$_Lang['contact']        = 'Contact';
+$_Lang['logout']         = 'Salir';
+$_Lang['player']         = 'Jugador';
+$_Lang['friends']        = 'Amigos';
+$_Lang['options']        = 'Opciones';
+$_Lang['stats']          = 'Estadísticas';
+$_Lang['search']         = 'Buscar';
+$_Lang['notes']          = 'Notas';
+$_Lang['rules']          = 'Reglas';
+$_Lang['contact']        = 'Contacto';
 $_Lang['chat']           = 'Chat';
-$_Lang['admin_cp']       = '<b style="color: lime;">Admin Panel</b>';
-$_Lang['go_cp']          = '<b style="color: lime;">Operator Panel</b>';
-$_Lang['sgo_cp']         = '<b style="color: lime;">Super Operator Panel</b>';
-$_Lang['forum']          = 'Forums';
-$_Lang['banned']         = 'Banned';
-$_Lang['ReportLink']     = 'Reporting System';
-$_Lang['Polls']          = 'Polls';
+$_Lang['admin_cp']       = '<b style="color: lime;">Panel de admin</b>';
+$_Lang['go_cp']          = '<b style="color: lime;">Panel de operador</b>';
+$_Lang['sgo_cp']         = '<b style="color: lime;">Panel de super operador</b>';
+$_Lang['forum']          = 'Foros';
+$_Lang['banned']         = 'Baneados';
+$_Lang['ReportLink']     = 'Sistema de reporte';
+$_Lang['Polls']          = 'Encuestas';
 
-$_Lang['ServerTimeTxt']  = 'Current Server Time';
+$_Lang['ServerTimeTxt']  = 'Hora del servidor';
 
-$_Lang['ChatTitle']      = 'Global players\' chat';
-$_Lang['FriendsTitle']   = 'List of your friends';
-$_Lang['NotesTitle']     = 'Your notes';
-$_Lang['StatsTitle']     = 'Table of players\' Statistics';
-$_Lang['SearchTitle']    = 'Search engine';
-$_Lang['RulesTitle']     = 'Server and Game rules';
-$_Lang['ContactTitle']   = 'Contact server\' Administration';
-$_Lang['OptionsTitle']   = 'Your account\' settings';
-$_Lang['LogoutTitle']    = 'Logout from the game';
-$_Lang['AdminLinkTitle'] = 'Server administration\'s panel';
-$_Lang['GOLinkTitle']    = 'Game operator\'s panel';
-$_Lang['SGOLinkTitle']   = 'Super game operator\'s panel';
-$_Lang['ForumTitle']     = 'The official game Forums';
-$_Lang['BannedTitle']    = 'List of all banned players';
-$_Lang['PollsTitle']     = 'Help us to improve in-game experience by expressing your opinions!';
-$_Lang['ReportTitle']    = 'Report other player\'s transgression or a bug found in the game!';
+$_Lang['ChatTitle']      = 'Chat global';
+$_Lang['FriendsTitle']   = 'Lista de amigos';
+$_Lang['NotesTitle']     = 'Tus notas';
+$_Lang['StatsTitle']     = 'Estadísticas de jugadores';
+$_Lang['SearchTitle']    = 'Buscador';
+$_Lang['RulesTitle']     = 'Reglas del servidor y del juego';
+$_Lang['ContactTitle']   = 'Contactar con el administrador del servidor';
+$_Lang['OptionsTitle']   = 'Ajustes de tu cuenta';
+$_Lang['LogoutTitle']    = 'Cerrar sesión';
+$_Lang['AdminLinkTitle'] = 'Panel de administración';
+$_Lang['GOLinkTitle']    = 'Panel de gestión del operador';
+$_Lang['SGOLinkTitle']   = 'Panel de gestión del super operador';
+$_Lang['ForumTitle']     = 'Foros oficiales';
+$_Lang['BannedTitle']    = 'Lista de jugadores baneados';
+$_Lang['PollsTitle']     = 'Ayúdanos a mejorar el juego con tu opinión!';
+$_Lang['ReportTitle']    = 'Reporta a otro jugador o avisa de un bug en el juego!';
 
-$_Lang['Pro']            = 'Pro Account';
-$_Lang['ProTitle']       = 'Check your Pro Account status and find out more about its benefits';
-$_Lang['Free']           = 'Free Account';
-$_Lang['FreeTitle']      = 'Check out the benefits of Pro Account!';
+$_Lang['Pro']            = 'Cuenta Pro';
+$_Lang['ProTitle']       = 'Consulta el estado de tu Cuenta Pro y conoce sus beneficios';
+$_Lang['Free']           = 'Cuenta gratuíta';
+$_Lang['FreeTitle']      = 'Conoce los beneficios de convertir tu cuenta en Pro!';
 
 ?>
