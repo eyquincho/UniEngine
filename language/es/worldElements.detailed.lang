@@ -12,251 +12,251 @@ $_Lang['WorldElements_Detailed'] = [
 
     // Buildings
     1 => [
-        'description_short' => 'Supplier of the main resource to produce structures and space ships.',
+        'description_short' => 'Las minas de metal proveen los recursos básicos de un imperio emergente, y permiten la construcción de edificios y naves.',
     ],
     2 => [
-        'description_short' => 'Supplier of the main resource used to produce electronic circuits and form certain alloy compounds.',
+        'description_short' => 'Los cristales son el recurso principal usado para construir circuitos electrónicos y ciertas aleaciones.',
     ],
     3 => [
-        'description_short' => 'Separates atoms of deuterium (heavy hydrogen isotopes) from the light water particles located on a planet.',
+        'description_short' => 'El deuterio se usa como combustible para naves, y se recolecta en el mar profundo. Es una sustancia muy escasa, y por ello, relativamente cara.',
     ],
     4 => [
-        'description_short' => 'The Solar plant generates energy from solar radiation.',
+        'description_short' => 'Las plantas de energía solar convierten energía fotónica en energía eléctrica, para su uso en casi todos los edificios y estructuras.',
     ],
     12 => [
-        'description_short' => 'The Fusion reactor generates energy from the fusion reaction of deuterium atoms.',
+        'description_short' => 'Un reactor de fusión nuclear que produce un átomo de helio a partir de dos átomos de deuterio usando una presión extremadamente alta y una elevadísima temperatura.',
     ],
     14 => [
-        'description_short' => 'The Robotics factory provides cheap work force used to expand the planetary infrastructure. Each factory level increases the speed of structures construction.',
+        'description_short' => 'Las fábricas de robots proporcionan unidades baratas y de fácil construcción que pueden ser usadas para mejorar o construir cualquier estructura planetaria. Cada nivel de mejora de la fábrica aumenta la eficiencia y el numero de unidades robóticas que ayudan en la construcción.',
     ],
     15 => [
-        'description_short' => 'The Nanite factory produces nano-sized robots, which are considered the ultimate form of the Robotics technology. Each factory level halves the time to finish structures, ships nad defence systems construction.',
+        'description_short' => 'El tamaño microscópico de las nanomáquinas se traduce en mayor velocidad de funcionamiento. Esta fábrica produce nanomáquinas que son la última evolución de la tecnología robótica.',
     ],
     21 => [
-        'description_short' => 'The Shipyard is responsible for constructing all ships and defensive structures.',
+        'description_short' => 'El hangar es el lugar donde se construyen naves y estructuras de defensa planetaria.',
     ],
     22 => [
-        'description_short' => 'Metal Storage structures provide storage containment for unprocessed metal from metal mines.',
+        'description_short' => 'Almacén de metal sin procesar.',
     ],
     23 => [
-        'description_short' => 'Crystal Storage is a facitily that stores unprocessed crystals from your mines.',
+        'description_short' => 'Almacén de cristal sin procesar.',
     ],
     24 => [
-        'description_short' => 'The Deuterium Tank is a huge containment facility which stores unused Deuterium.',
+        'description_short' => 'Contenedores enormes para almacenar deuterio.',
     ],
     31 => [
-        'description_short' => 'The Research Lab allows you to conduct research.',
+        'description_short' => 'Se necesita un laboratorio de investigación para conducir la investigación en nuevas tecnologías.',
     ],
     33 => [
-        'description_short' => 'The Terraformer is a building that increases the fields on your planet, increasing your planet\'s utilisable space.',
-        'description_alt' => 'The problem of increasing need of extended space for planetary structures is an unavoidable issue of every expanding empire. Traditional construction and engineering provided insufficient after certain point in planetary development.',
+        'description_short' => 'El Terraformer aumenta la superficie útil en el planeta.',
+        'description_alt' => 'La pregunta sobre cómo disponer de más espacio para las estructuras en los planetas surgió durante el proceso de crecimiento de las infraestructuras de los mismos a través de las galaxias. Los métodos de construcción e ingenería tradicional eran insuficientes debido a la enorme necesidad de espacio edificable. Un pequeño grupo de físicos de alta energía y nanotécnicos finalmente encontraron una solución: el Terraforming.',
     ],
     34 => [
-        'description_short' => 'An Alliance Depot is where a allied fleet can be re-fueled with your deuterium, allowing them to remain at your planet for longer time.',
+        'description_short' => 'El depósito de la alianza ofrece la posibilidad de repostar a las flotas aliadas que estén estacionadas en la órbita ayudando a defender.',
     ],
 
     // Special buildings
     41 => [
-        'description_short' => 'Since moons do not have their own atmosphere, it\'s needed to construct a Lunar base first to provide safe environment for further development.',
+        'description_short' => 'La luna no tiene atmósfera por tanto, una base lunar debe ser construido antes de la liquidación de otros edificios.',
     ],
     42 => [
-        'description_short' => 'The Sensory Phalanx allows to easily scan fleets in flight. The higher its level, the higher its range is.',
+        'description_short' => 'La matriz del sensor le permite controlar los movimientos de la flota. Cuanto mayor sea la etapa, el mayor es el rango de la falange.',
     ],
     43 => [
-        'description_short' => 'The Jump gate is a huge relay, allowing to instantaneously send fleets between galaxies.',
-        'description_extra' => 'With each level of the gate, the time between jumps decreases.<br/><br/>The upgraded version of the Jump gate is called <a class="orange" href="?gid=50">Quantum gate</a>',
+        'description_short' => 'Saltar puertas son transmisores enormes que son capaces de enviar grandes flotas sin pérdida de tiempo a través del universo.',
+        'description_extra' => 'Con cada nivel del salto, el tiempo entre saltos se reduce.<br/><br/>La versión mejorada del salto cuántico es el <a class="orange" href="?gid=50">Portal Cuántico</a>',
     ],
     44 => [
-        'description_short' => 'A Missile Silo is a building that launches and stores missiles.',
+        'description_short' => 'El silo es un lugar de almacenamiento y lanzamiento de misiles planetarios.',
     ],
     50 => [
-        'description_short' => 'The Quantum gate is a massive device capable of instantaneous transfer of any matter using a stable spatiotemporal tunnel.',
-        'description_extra' => 'Thanks to the usage of Dark Energy as a power source, it was possible to construct such an advanced device.<br/><br/>When owning two Quantum gates, it is possible to instantly transport fleets from one place to another without any delay and deuterium usage.<br/>It is also possible to send a fleet to any point in space of the same galaxy, however such jump requires a cooldown period of 6 hours to accumulate enough energy for further usage.<br/><br/>The Quantum gate, compared to the Jump gate, allows to transport resources.',
+        'description_short' => 'El Portal Cuántico es un dispositivo enorme capaz de transmitir instantáneamente cualquier materia utilizando un tunel espaciotemporal estable.',
+        'description_extra' => 'Gracias al uso de Materia Oscura como combustible, fue posible construir un dispositivo tan avanzado.<br/><br/>Si tienes dos Portales CUánticos puedes teletransportar instantáneamente flotas de un punto a otro sin retraso y sin gasto de deuterio.<br/>También es posible enviar una flota a cualquier punto en el espacio en la misma galaxia, pero tiene un tiempo de recarga de 6 horas.<br/><br/>Al contrario que el Salto Cuántico, el Portal Cuántico permite transportar recursos.',
     ],
 
     // Research
     106 => [
-        'description_short' => 'Thanks to this technology, it is possible to obtain intel about enemies\' planets.',
+        'description_short' => 'Usando esta tecnología, puede obtenerse información sobre otros planetas.',
     ],
     108 => [
-        'description_short' => 'Computer technology involves expanding existing computer capacities.',
-        'description_extra' => 'Each level of computer technology increases the maximum number of fleets by one.'
+        'description_short' => 'Cuanto más elevado sea el nivel de tecnología de computación, más flotas podrás controlar simultaneamente. ',
+        'description_extra' => 'Cada nivel adicional de esta tecnologia, aumenta el numero de flotas en 1.'
     ],
     109 => [
-        'description_short' => 'Weapons technology involves further development of existing weapons systems.',
-        'description_extra' => 'Each level of weapons technology increases the weapon strength of both ships and defense by 10% of the base value.'
+        'description_short' => 'Este tipo de tecnología incrementa la eficiencia de tus sistemas de armamento.',
+        'description_extra' => 'Cada mejora de la tecnología militar añade un 10% de potencia a la base de daño de cualquier arma disponible.'
     ],
     110 => [
-        'description_short' => 'Shielding technology involves researching new ways of providing shield with energy and thus making them more efficient and tougher.',
-        'description_extra' => 'Each developed level increases the efficiency of shields by 10% of the base value.'
+        'description_short' => 'La tecnología de defensa se usa para generar un escudo de partículas protectoras alrededor de tus estructuras.',
+        'description_extra' => 'Cada nivel de esta tecnología aumenta el escudo efectivo en un 10% (basado en el nivel de una estructura dada).'
     ],
     111 => [
-        'description_short' => 'Developing special alloys of metals increases their structural integrity.',
-        'description_extra' => 'Each developed level increases the efficiency of ships\' and defences\' hulls by 10% of the base value.'
+        'description_short' => 'Las aleaciones altamente sofisticadas ayudan a incrementar el blindaje de una nave añadiendo el 10% de su fuerza en cada nivel a la fuerza base.',
+        'description_extra' => 'Las aleaciones altamente sofisticadas ayudan a incrementar el blindaje de una nave añadiendo el 10% de su fuerza en cada nivel a la fuerza base.'
     ],
     113 => [
-        'description_short' => 'Energy technology allows research into forms of energy distribution which is a necessity for other research and technologies, defensive structures, and some buildings.',
+        'description_short' => 'Entendiendo la tecnología de diferentes tipos de energía, muchas investigaciones nuevas y avanzadas pueden ser adaptadas. La tecnología de energía es de gran importancia para un laboratorio de investigación moderno.',
     ],
     114 => [
-        'description_short' => 'Hyperspace technology allows research into propulsion systems that power much larger ships and also allows for much faster travel with better fuel efficiency.',
+        'description_short' => 'Incorporando la cuarta y quinta dimensión en la tecnología de propulsión, se puede disponer de un nuevo tipo de motor; que es más eficiente y usa menos combustible que los convencionales.',
     ],
     115 => [
-        'description_short' => 'The Combustion Drive is a technology that allows the construction of the most basic ships.',
-        'description_extra' => 'Some ships that use the Combustion Drive will have their Base Speed increased by 10% for every developed level of this tech.'
+        'description_short' => 'Ejecutar investigaciones en esta tecnología proporciona motores de combustión siempre más rapido, aunque cada nivel aumenta solamente la velocidad en un 10% de la velocidad base de una nave dada.',
+        'description_extra' => 'Ejecutar investigaciones en esta tecnología proporciona motores de combustión siempre más rapido, aunque cada nivel aumenta solamente la velocidad en un 10% de la velocidad base de una nave dada.'
     ],
     117 => [
-        'description_short' => 'The Impulse Drive is a technology that allows the construction of more advanced ships.',
-        'description_extra' => 'Some ships that use the Impulse Drive will have their Base Speed increased by 20% for every developed level of this tech. Further development of this technology increases the range of Interplanetary missiles as well.'
+        'description_short' => 'El sistema del motor de impulso se basa en el principio de la repulsión de partículas.',
+        'description_extra' => 'La materia repelida es basura generada por el reactor de fusión usado para proporcionar la energía necesaria para este tipo de motor de propulsión.'
     ],
     118 => [
-        'description_short' => 'Warps space around a ship, allowing it to cross huge distances in seconds.',
-        'description_extra' => 'Some ships that use the Hyperspace Drive will have their Base Speed increased by 30% for every developed level of this tech.'
+        'description_short' => 'Los motores de hiperespacio permiten entrar al mismo a través de una ventana hiperespacial para reducir drásticamente el tiempo de viaje.',
+        'description_extra' => 'Aumenta la velocidad de las naves que lo utilizan en 30% por nivel.'
     ],
     120 => [
-        'description_short' => 'Laser technology allows research into the laser based weapon systems used by a number of defensive structures and ships.',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'La Tecnología láser es un importante conocimiento; conduce a la luz monocromática firmemente enfocada sobre un objetivo. ',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
     121 => [
-        'description_short' => 'Ion Technology is a technology that deals with the study of concentrated ions. When ions are concentrated, it forms a deadly ion beam.',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'La Tecnología iónica enfoca un rayo de iones acelerados en un objetivo, lo que puede provocar un gran daño debido a su naturaleza de electrones cargados de energía.',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
     122 => [
-        'description_short' => 'Plasma Technology is a Technology that expands on the concepts from Laser Technology and Ion Technology for the purpose of creating the more advanced weaponry. ',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'Las armas de plasma son incluso más peligrosas que cualquier otro sistema de armamento conocido, debido a la naturaleza agresiva del plasma.',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
     123 => [
-        'description_short' => 'This technology allows Research Labs from different planets to work together simultaneously',
-        'description_extra' => 'Each developed level of this technology connects another lab to the network. The more advanced labs are connected first.',
+        'description_short' => 'Los científicos de tus planetas pueden comunicarse entre ellos a través de esta red.',
+        'description_extra' => 'Cada nivel conecta otro laboratorio a la red',
     ],
     124 => [
-        'description_short' => 'Ships can be upgraded with a special research module, which can be used during long expeditions into unknown sectors.',
+        'description_short' => 'Las naves son equipadas con equipo cientifico para tomar datos en largas expediciones.',
     ],
     125 => [
-        'description_short' => 'Antimatter is an incredibly unstable type of particles, which releases incredible amount of Gamma radiation upon contact with regular matter.',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'Antimateria es un tipo de particulas muy inestable, que libera una gran cantidad de radiación Gamma al contactar con materia normal.',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
     126 => [
-        'description_short' => 'The Distintegration stream technology is the pinnacle of advanced weaponry research branch. A deadly beam of energy destroys every material structure it encounters on its path.',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'La tecnología del rayo de desintegración es el culmen de la tecnología armamentística.',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
     199 => [
-        'description_short' => 'By firing a concentrated beam of gravitons, an artificial gravitational field can be constructed, which can easily destroy space ships and even entire moons.',
-        'description_extra' => 'Each developed level increases the efficiency of all ships\' and defence systems\' weapons using this technology by 5%.',
+        'description_short' => 'A través del disparo de partículas concentradas de gravitón se genera un campo gravitacional artificial con suficiente potencia y poder de atracción para destruir no solo naves, sino lunas enteras.',
+        'description_extra' => 'Aumenta el daño de las naves y defensas que lo utilizan en un 5%',
     ],
 
     // Ships
     202 => [
-        'description_short' => 'Small cargo ships is a very agile ship used to transport resources from one planet to another.',
-        'description_extra' => 'After reaching level 5 of the Impulse drive technology, this ship type will be upgraded to use the Impulse engines.',
+        'description_short' => 'Las naves pequeñas de carga son naves muy ágiles usadas para transportar recursos desde un planeta a otro.',
+        'description_extra' => 'A partir del nivel 5 de la tecnología de impulso, estas naves pasarán a utilizarlo.',
     ],
     203 => [
-        'description_short' => 'The large cargo ship is an advanced version of the smaller cargo ship allowing for a bigger cargo space and faster movement speeds.',
+        'description_short' => 'La nave grande de carga es una versión avanzada de las naves pequeñas de carga, permitiendo así una mayor capacidad de almacenamiento y velocidades más altas gracias a un mejor sistema de propulsión.',
     ],
     204 => [
-        'description_short' => 'The light fighter is a maneuverable ship you can find on nearly every planet. Their costs are rather low, however their weaponry power is low as well.',
+        'description_short' => 'El cazador ligero es una nave maniobrable que puedes encontrar en casi cualquier planeta. El coste no es particularmente alto, pero asimismo el escudo y la capacidad de carga son muy bajas.',
     ],
     205 => [
-        'description_short' => 'The heavy fighter is an improved version of the light fighter, with hull and weaponry improvements applied.',
+        'description_short' => 'El cazador pesado es la evolución logica del ligero, ofreciendo escudos reforzados y una mayor potencia de ataque.',
     ],
     206 => [
-        'description_short' => 'Combat cruisers have armor almost three times as strong as heavy fighters and support more than twice their firing power.',
+        'description_short' => 'Los cruceros de combate tienen un escudo casi tres veces más fuerte que el de los cazadores pesados y más del doble de potencia de ataque. Su velocidad de desplazamiento está también entre las más rápidas jamás vista. ',
     ],
     207 => [
-        'description_short' => 'Battleships provide the backbone of any military fleet. Heavy armour, strong weapons systems and high cruising speed, as well as a large cargo bay, make this ship a tough opponent to fight against.',
+        'description_short' => 'Las naves de batalla son la espina dorsal de cualquier flota militar. Blindaje pesado, potentes sistemas de armamento y una alta velocidad de viaje, así como una gran capacidad de carga hace de esta nave un duro rival contra el que luchar.',
     ],
     208 => [
-        'description_short' => 'This ship provides the means necessary to colonise uninhabited planets.',
+        'description_short' => 'Esta nave proporciona lo necesario para ir a donde ningún hombre ha llegado antes y colonizar nuevos mundos.',
     ],
     209 => [
-        'description_short' => 'Recycler ships are used to harvest debris from planets\' orbits to recycle valuable resources',
+        'description_short' => 'Los recicladores se usan para recolectar escombros flotando en el espacio para reciclarlos en recursos útiles.',
     ],
     210 => [
-        'description_short' => 'Espionage probes are small unmanned vesels with extremely fast propulsion systems used to spy on enemy worlds. ',
+        'description_short' => 'Las sondas de espionaje son pequeños droides no tripulados con un sistema de propulsión excepcionalmente rápido usado para espiar en planetas enemigos.',
     ],
     211 => [
-        'description_short' => 'The bomber is used primarily to destroy any planetary defence systems.',
-        'description_extra' => 'After reaching level 8 of the Hyperspace drive technology, this ship type will be upgraded to use the Hyperspace engine.',
+        'description_short' => 'El Bombardero es una nave de propósito especial, desarrollado para atravesar las defensas planetarias más pesadas.',
+        'description_extra' => 'Al alcanzar el nivel 8 del motor hiperespacial, esta nave pasará a utilizarlo.',
     ],
     212 => [
-        'description_short' => 'Solar satellites are simple orbiting satellites equipped with photo voltaic cells as a means of generating energy. The energy is transmitted to the planet via a special laser beam.',
+        'description_short' => 'Los satélites solares son simples satélites en órbita equipados con células fotovoltaicas y transmisores para llevar la energía al planeta. Se transmite por este medio a la tierra usando un rayo láser especial.',
     ],
     213 => [
-        'description_short' => 'The Destroyed is the king among the battle ships. It is equiped with multiple ion, plasma and Gauss cannons.',
+        'description_short' => 'El destructor es la nave más pesada jamás vista y posee un potencial de ataque sin precedentes.',
     ],
     214 => [
-        'description_short' => 'The Deathstar is a moon sized ship known for its destructive power. It is equiped with a gigantic graviton cannon, which is capable of destroying entire fleets and even moons.',
+        'description_short' => 'No hay nada tan grande y peligroso como una estrella de la muerte aproximándose.',
     ],
     215 => [
-        'description_short' => 'Battlecruiser is a vessel specialised in enemy fleets interception, thanks to its advanced laser cannons.',
+        'description_short' => 'El Acorazado es una nave altamente especializada en la intercepción de flotas hostiles.',
     ],
     216 => [
-        'description_short' => 'The Orbital station is the next step of the planetary defense technology.',
-        'description_extra' => 'The station is composed of numerous automated plasma and laser cannons placed on the planet\'s orbit. Avoiding the penalty of the planet\'s atmosphere energy absorption, their unsuppressed raw power can easily shot down enemy ships.',
+        'description_short' => 'La estación orbital es el siguiente paso en la defensa de un planeta.',
+        'description_extra' => 'La estación está compuesta de nuermosos cañones laser y de plasma colocados en el exterior de la atmósfera.',
     ],
     217 => [
-        'description_short' => 'The advancements in miniaturisation and nano technologies allowed to create this spatious transportation vessel.',
+        'description_short' => 'La tecnología de miniaturización ha permitido crear esta pequeña pero espaciosa nave de carga',
     ],
     218 => [
-        'description_short' => 'The discovery of efficient antimatter production techniques enabled the engineers to construct this special type of short range missiles, capable of destroying many ships at once.',
+        'description_short' => 'El descubrimiento de técnicas de producción de antimateria eficientes permitieron a los ingenieros construir este tipo de misiles de corto alcance, capaces de destruir varias naves a la vez.',
     ],
     219 => [
-        'description_short' => 'The abandoned design of a spacecraft capable of taking people and heavy loads into orbit, now has found its new purpose. Its outdated propulsion systems do not allow it to reach great speeds.',
-        'description_extra' => '<b style="color: orange;">Due to the usage of outdated combusion engines, this type of ship does not take advantage of the Combusion drive technology improvements.</b>'
+        'description_short' => 'El diseño abandonado de una nave capaz de llevar a personas y grandes cargas a órbita por fin encontró su uso. Su anticuado sistema de propulsión no le permite alcanzar altas velocidades.',
+        'description_extra' => '<b style="color: orange;">Por lo anticuado de su motor, esta nave no se beneficia de las mejoras del motor de combustión.</b>'
     ],
     220 => [
-        'description_short' => 'The Fighter Carrier is used to quickly transport smaller, but more versatile spacecrafts.',
-        'description_extra' => 'Its internal hangars can carry hundreds of fighters. Thanks to its advanced engines, it can easily transport these fighters to the battlefield in no time.',
+        'description_short' => 'El Transporte de cazas se utiliza para transportar rápidamente naves más pequeñas pero versátiles.',
+        'description_extra' => 'Sus hangares interiores pueden portar cientos de cazas.',
     ],
     221 => [
-        'description_short' => 'The Hadron bomber uses Hadron decay effect in its deadly missiles against planetary defence systems.',
+        'description_short' => 'El bombardero de hadrones utiliza su armamento para destruir defensas planetarias.',
     ],
     222 => [
-        'description_short' => 'Thanks to the usage of high energy plasma cannons, this vessel can efficiently deal with heavily armoured ships.',
+        'description_short' => 'Gracias al uso de cañones de plasma, esta nave puede hacer mucho daño a naves fuertemente blindadas.',
     ],
     223 => [
-        'description_short' => 'Efficient usage of the annihilation phenomenon led to creation of this incredible spacecraft.',
-        'description_extra' => 'A discharge of concentrated antiproton beam in the enemy\'s ships direction leads to a cascade destabilisation reaction in ships\' hulls, eventually causing a breakdown due to rapid decompression.',
+        'description_short' => 'El uso eficiente del fenómeno de aniquilación llevó a la creación de esta increible nave.',
+        'description_extra' => 'Una descarga de un rayo de antiprotones en dirección al enemigo provoca un desestabilización de los reactores de las naves, provocando su explosión.',
     ],
     224 => [
-        'description_short' => 'The final weapon against heavily armoured spacecrafts, capable of tearing apart atomic bonds in split seconds.',
-        'description_extra' => 'One of the deadlies vessels ever developed. The usage of lethal disintegration beams tears apart enemies\' ships into pieces.',
+        'description_short' => 'El arma definitiva contra naves muy blindadas, capaz de destruir bombas atómicas.',
+        'description_extra' => 'Una de las navez más mortales jamás creadas.',
     ],
 
     // Defense systems
     401 => [
-        'description_short' => 'The Rocket launcher is a cheap and simplistic mean of planetary defense.',
+        'description_short' => 'El lanzamisiles es un sistema de defensa sencillo, pero barato.',
     ],
     402 => [
-        'description_short' => 'By emitting a concentrated photonic beam, this defensive structure is able to cause more damage than a regular ballistic weaponry.',
+        'description_short' => 'Por medio de un rayo láser concentrado, se puede provocar más daño que con las armas balísticas normales.',
     ],
     403 => [
-        'description_short' => 'The heavy laser cannon is the advancement of the design of the light laser cannon.',
+        'description_short' => 'Los lásers grandes posee una mejor salida de energía y una mayor integridad estructural que los lásers pequeños.',
     ],
     404 => [
-        'description_short' => 'Gauss Cannons fire high-density metal projectiles at extremely high velocity using powerful electromagnets.',
+        'description_short' => 'Usando una inmensa aceleración electromagnética, los cañones gauss aceleran proyectiles pesados.',
     ],
     405 => [
-        'description_short' => 'The Ion cannon sends a high velocity beam on ions in its target\'s direction. The ions destabilise shields and damage any electronics.',
+        'description_short' => 'Los cañones iónicos disparan rayos de iones altamente energéticos contra su objetivo, desestabilizando los escudos y destruyendo los componentes electrónicos.',
     ],
     406 => [
-        'description_short' => 'One of the most advanced defense weapons systems ever developed, fires pulses of superheated plasma.',
+        'description_short' => 'Los cañones de plasma liberan la energía de una pequeña erupción solar en una bala de plasma. La energía destructiva es incluso superior a la del Destructor.',
     ],
     407 => [
-        'description_short' => 'The Small shield dome is a protective layer covering an entire planet, which absorbs substantial amounts of energy during the attack.',
+        'description_short' => 'La cúpula pequeña de protección cubre el planeta con un delgado campo protector que puede absorber inmensas cantidades de energía.',
     ],
     408 => [
-        'description_short' => 'The large shield dome is the advancement of the design of the small shield dome and can absorb more damage.',
+        'description_short' => 'La cúpula grande de protección proviene de una tecnología de defensa mejorada que absorbe incluso más energía antes de colapsarse.',
     ],
     409 => [
-        'description_short' => 'The best defence system ever created.',
+        'description_short' => 'La maxima proteccion para los planetas.',
     ],
 
     // Missiles
     502 => [
-        'description_short' => 'Anti-Ballistic Missiles are launched automatically to intercept approaching Interplanetary Missiles.',
+        'description_short' => 'Los misiles de intercepción destruyen los misiles interplanetarios.',
     ],
     503 => [
-        'description_short' => 'Interplanetary missiles are launched for planets to destroy enemy defense across the galaxy.',
+        'description_short' => 'Los misiles interplanetarios destruyen los sistemas de defensa del enemigo.',
     ],
 ];
 
