@@ -3,19 +3,19 @@
 // FIXME: make this configurable
 $_Lang['RegMail_UniName'] = 'Uni 1';
 
-$_Lang['mail_title'] = $_GameConfig['game_name'].' - Registration';
+$_Lang['mail_title'] = $_GameConfig['game_name'].' - Registro';
 
 $_Lang['mail_text'] = '';
-$_Lang['mail_text'] .= 'Welcome {login},<br/>thank you for registering to <a href="'.GAMEURL_STRICT.'">'.$_GameConfig['game_name'].'</a><br /><br />';
-$_Lang['mail_text'] .= '<b>Your activation link:</b> {activationlink}<br/><br/>';
-$_Lang['mail_text'] .= '<b>Details of your account</b><br/>';
+$_Lang['mail_text'] .= 'Bienvenido/a {login},<br/>gracias por registrarte en <a href="'.GAMEURL_STRICT.'">'.$_GameConfig['game_name'].'</a><br /><br />';
+$_Lang['mail_text'] .= '<b>Link de activación:</b> {activationlink}<br/><br/>';
+$_Lang['mail_text'] .= '<b>Detalles de tu cuenta</b><br/>';
 $_Lang['mail_text'] .= '<ul>';
-$_Lang['mail_text'] .= '<li><b>Universe</b>: {Universe}</li>';
-$_Lang['mail_text'] .= '<li><b>Username</b>: {login}</li>';
-$_Lang['mail_text'] .= '<li><b>Password:</b> {password}</li>';
-$_Lang['mail_text'] .= '<li><b>Referral link:</b> {UserRefLink}</li>';
+$_Lang['mail_text'] .= '<li><b>Universo</b>: {Universe}</li>';
+$_Lang['mail_text'] .= '<li><b>Usuario</b>: {login}</li>';
+$_Lang['mail_text'] .= '<li><b>Contraseña:</b> {password}</li>';
+$_Lang['mail_text'] .= '<li><b>Link de referidos:</b> {UserRefLink}</li>';
 $_Lang['mail_text'] .= '</ul><br/><br/>';
-$_Lang['mail_text'] .= 'The team of '.$_GameConfig['game_name'].' wishes you the best on your journey!';
+$_Lang['mail_text'] .= 'El equipo de '.$_GameConfig['game_name'].' te desea suerte en tu camino!';
 
 $_Lang['mail_template'] = '';
 $_Lang['mail_template'] .= '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">';
@@ -25,6 +25,6 @@ $_Lang['mail_template'] .= '</head><body>';
 $_Lang['mail_template'] .= $_Lang['mail_text'];
 $_Lang['mail_template'] .= '</body></html>';
 
-$_Lang['MotherPlanet'] = 'Mother planet';
+$_Lang['MotherPlanet'] = 'Planeta principal';
 
 ?>
