@@ -1,38 +1,38 @@
 <?php
 
-$_Lang['stat_title']             = "Server Statistics";
-$_Lang['stat_header_txt']        = 'Statistics calculated on';
-$_Lang['stat_show']              = "Show";
-$_Lang['stat_by']                = "which have";
-$_Lang['stat_range']             = "at rank position";
+$_Lang['stat_title']             = "Estadísticas del servidor";
+$_Lang['stat_header_txt']        = 'Calculadas el';
+$_Lang['stat_show']              = "Mostrar";
+$_Lang['stat_by']                = "con";
+$_Lang['stat_range']             = "en la posición";
 
-$_Lang['stat_player']            = "players";
-$_Lang['stat_allys']             = "alliances";
-$_Lang['stat_main']              = "points";
-$_Lang['stat_fleet']             = "fleets points";
-$_Lang['stat_research']          = "research points";
-$_Lang['stat_building']          = "buildings points";
-$_Lang['stat_defenses']          = "defenses points";
+$_Lang['stat_player']            = "jugadores";
+$_Lang['stat_allys']             = "alianzas";
+$_Lang['stat_main']              = "puntos";
+$_Lang['stat_fleet']             = "puntos de flota";
+$_Lang['stat_research']          = "puntos de investigación";
+$_Lang['stat_building']          = "puntos de estructuras";
+$_Lang['stat_defenses']          = "puntos de defensas";
 
 $_Lang['Position']               = "No.";
 $_Lang['Difference']             = "+/-";
-$_Lang['Player']                 = "Player";
-$_Lang['Alliance']               = "Alliance";
-$_Lang['Points']                 = "Points";
-$_Lang['Members']                = "Members";
-$_Lang['PerMember']              = "Per member";
-$_Lang['Ecrire']                 = "Write a message";
+$_Lang['Player']                 = "Jugador";
+$_Lang['Alliance']               = "Alianza";
+$_Lang['Points']                 = "Puntos";
+$_Lang['Members']                = "Miembros";
+$_Lang['PerMember']              = "Por miembro";
+$_Lang['Ecrire']                 = "Escribir un mensaje";
 
-$_Lang['Fight_Won']              = 'Won';
-$_Lang['Fight_Lost']             = 'Lost';
-$_Lang['Fight_Draw']             = 'Drawn';
+$_Lang['Fight_Won']              = 'Victoria';
+$_Lang['Fight_Lost']             = 'Derrota';
+$_Lang['Fight_Draw']             = 'Empate';
 
-$_Lang['User_is_banned']         = 'Player is banned!';
-$_Lang['User_is_on_vacations']   = 'Player is on vacation';
+$_Lang['User_is_banned']         = 'Jugador baneado';
+$_Lang['User_is_on_vacations']   = 'Jugador de vacaciones';
 
-$_Lang['QuickChangeInfo']        = 'Position change since <b>the last stats recalculation</b>';
-$_Lang['DailyChangeInfo']        = 'Position change since <b>yesterday</b>';
+$_Lang['QuickChangeInfo']        = 'Cambio en la posición desde <b>el último cálculo</b>';
+$_Lang['DailyChangeInfo']        = 'Cambio en la posición desde <b>ayer</b>';
 
-$_Lang['No_Rows_Found']          = 'Server\'s statistics not calculated yet!';
+$_Lang['No_Rows_Found']          = 'Todavía no se han calculado las estadísticas del servidor!';
 
 ?>
