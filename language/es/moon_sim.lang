@@ -1,17 +1,17 @@
 <?php
 
-$_Lang['Title']                  = 'Moon Destruction Simulator';
+$_Lang['Title']                  = 'Simulador de destrucción de luna';
 
-$_Lang['Table1_Diameter']        = 'Moon Diameter (km)';
-$_Lang['Table1_ShipCount']       = 'Deathstars amount';
-$_Lang['Table1_Simulate']        = 'Simulate';
-$_Lang['Table2_Result']          = 'Simulation result';
-$_Lang['Table2_Diameter']        = 'Moon Diameter';
-$_Lang['Table2_MoonChance']      = 'Moon destruction chance';
-$_Lang['Table2_FleetChance']     = 'Fleet destruction chance';
+$_Lang['Table1_Diameter']        = 'Diámetro de la luna (km)';
+$_Lang['Table1_ShipCount']       = 'Cantidad de Estrellas de la Muerte';
+$_Lang['Table1_Simulate']        = 'Simular';
+$_Lang['Table2_Result']          = 'Resultado de la simulación';
+$_Lang['Table2_Diameter']        = 'Diámetro de la luna';
+$_Lang['Table2_MoonChance']      = 'Probabilidades de destrucción de la luna';
+$_Lang['Table2_FleetChance']     = 'Probabilidades de destrucción de la flota';
 $_Lang['Table2_Km']              = 'km';
 
-$_Lang['Error_BadDataGiven']     = 'Invalid data given!';
-$_Lang['Error_DiameterTooBig']   = 'Moon\'s Diameter cannot exceed 10 000 km';
+$_Lang['Error_BadDataGiven']     = 'Datos introducidos erróneos!';
+$_Lang['Error_DiameterTooBig']   = 'El diámetro de la luna no puede ser superior a 10 000 km';
 
 ?>

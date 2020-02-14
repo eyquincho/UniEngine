@@ -1,19 +1,19 @@
 <?php
 
-$_Lang['empire_vision']     = "Empire Overview";
-$_Lang['name']              = "Name";
-$_Lang['coordinates']       = "Coordinates";
-$_Lang['fields']            = "Fields";
-$_Lang['resources']         = "Resources";
+$_Lang['empire_vision']     = "Vista de imperio";
+$_Lang['name']              = "Nombre";
+$_Lang['coordinates']       = "Coordenadas";
+$_Lang['fields']            = "Campos";
+$_Lang['resources']         = "Recursos";
 $_Lang['metal']             = "Metal";
-$_Lang['crystal']           = "Crystal";
-$_Lang['deuterium']         = "Deuterium";
-$_Lang['energy']            = "Energy";
-$_Lang['buildings']         = "Buildings";
-$_Lang['ships']             = "Ships";
-$_Lang['defense']           = "Defenses";
+$_Lang['crystal']           = "Cristal";
+$_Lang['deuterium']         = "Deuterio";
+$_Lang['energy']            = "Energia";
+$_Lang['buildings']         = "Construcciones";
+$_Lang['ships']             = "Naves";
+$_Lang['defense']           = "Defensas";
 
-$_Lang['ShowPlanets']       = 'Planets';
-$_Lang['ShowMoons']         = 'Moons';
+$_Lang['ShowPlanets']       = 'Planetas';
+$_Lang['ShowMoons']         = 'Luna';
 
 ?>

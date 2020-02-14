@@ -1,44 +1,44 @@
 <?php
 
-$_Lang['Title']                     = 'Your notes';
-$_Lang['Title_EditRow']             = 'Edit note';
-$_Lang['Title_AddRow']              = 'Add note';
+$_Lang['Title']                     = 'Tus notas';
+$_Lang['Title_EditRow']             = 'Editar nota';
+$_Lang['Title_AddRow']              = 'Añadir nota';
 
-$_Lang['Link_AddNote']              = 'Add new note';
+$_Lang['Link_AddNote']              = 'Añadir nota nueva';
 
-$_Lang['Headers_Title']             = 'Title';
-$_Lang['Headers_Date']              = 'Date added';
-$_Lang['Headers_Priority']          = 'Priority';
-$_Lang['Headers_Text']              = 'Content';
-$_Lang['Headers_Limit']             = 'Limit';
+$_Lang['Headers_Title']             = 'Titulo';
+$_Lang['Headers_Date']              = 'Fecha';
+$_Lang['Headers_Priority']          = 'Prioridad';
+$_Lang['Headers_Text']              = 'Contenido';
+$_Lang['Headers_Limit']             = 'Limite';
 
-$_Lang['Info_NoRows']               = 'No notes';
-$_Lang['Info_SelectAll']            = 'Select / deselect all';
+$_Lang['Info_NoRows']               = 'NO hay noas';
+$_Lang['Info_SelectAll']            = 'Seleccionar / deseleccionar todo';
 
-$_Lang['Priority_1']                = 'Low';
-$_Lang['Priority_2']                = 'Medium';
-$_Lang['Priority_3']                = 'High';
+$_Lang['Priority_1']                = 'Bajo';
+$_Lang['Priority_2']                = 'Medio';
+$_Lang['Priority_3']                = 'Alto';
 
-$_Lang['Action_DeleteSelected']     = 'Delete selected';
-$_Lang['Action_DeleteAll']          = 'Delete all';
-$_Lang['Action_Cancel']             = 'Cancel';
-$_Lang['Action_Save']               = 'Save';
-$_Lang['Action_Submit']             = 'Submit action';
+$_Lang['Action_DeleteSelected']     = 'Borrar seleccionadas';
+$_Lang['Action_DeleteAll']          = 'Borrar todas';
+$_Lang['Action_Cancel']             = 'Cancelar';
+$_Lang['Action_Save']               = 'Guardar';
+$_Lang['Action_Submit']             = 'Enviar';
 
-$_Lang['JS_Confirm']                = 'Are you sure you want to delete all notes?';
+$_Lang['JS_Confirm']                = 'Seguro que quieres borrar todas las notas?';
 
-$_Lang['Errors_BadIDGiven']         = 'Invalid note identifier given!';
-$_Lang['Errors_IDNoExist']          = 'This note does not exist!';
-$_Lang['Errors_NoteNotYour']        = 'You cannot see this note!';
-$_Lang['Errors_TitleEmpty']         = 'Title cannot be empty!';
-$_Lang['Errors_BadPriority']        = 'Invalid priority!';
-$_Lang['Errors_TextEmpty']          = 'Content cannot be empty!';
-$_Lang['Errors_NothingToDelete']    = 'No notes to delete!';
-$_Lang['Errors_NothingDeleted']     = 'Nothing deleted!';
+$_Lang['Errors_BadIDGiven']         = 'ID de la nota erróneo!';
+$_Lang['Errors_IDNoExist']          = 'Esta nota no existe!';
+$_Lang['Errors_NoteNotYour']        = 'No puedes ver esta nota!';
+$_Lang['Errors_TitleEmpty']         = 'El título no puede estar vacío!';
+$_Lang['Errors_BadPriority']        = 'Prioridad errónea!';
+$_Lang['Errors_TextEmpty']          = 'El contenido no puede estar vacío!';
+$_Lang['Errors_NothingToDelete']    = 'No hay notas para borrar!';
+$_Lang['Errors_NothingDeleted']     = 'No se borró nada!';
 
-$_Lang['Msg_EditSuccess']           = 'Changes saved!';
-$_Lang['Msg_AddSuccess']            = 'Note has been added!';
-$_Lang['Msg_DeleteAllSuccess']      = 'All notes deleted!';
-$_Lang['Msg_DeleteSelectedSuccess'] = 'Selected notes have been deleted!';
+$_Lang['Msg_EditSuccess']           = 'Cambios guardados!';
+$_Lang['Msg_AddSuccess']            = 'Se ha añadido la nota!';
+$_Lang['Msg_DeleteAllSuccess']      = 'Se han borrado todas las notas!';
+$_Lang['Msg_DeleteSelectedSuccess'] = 'Se han borrado las notas seleccionadas!';
 
 ?>
