@@ -2,9 +2,9 @@
 
 $_Lang['Texts']             = [];
 
-$_Lang['Error_TextNoExist'] = 'This article does not exist!';
-$_Lang['Error_BadID']       = 'Invalid article identifier!';
-$_Lang['PageTitle']         = 'Article: ';
-$_Lang['PageTitleError']    = 'Articles';
+$_Lang['Error_TextNoExist'] = 'Este artículo no existe!';
+$_Lang['Error_BadID']       = 'Identificador de artículo erróneo!';
+$_Lang['PageTitle']         = 'Articulo: ';
+$_Lang['PageTitleError']    = 'Articulos';
 
 ?>
